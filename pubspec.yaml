@@ -19,6 +19,8 @@ dependencies:
   path: ^1.8.3
   fl_chart: ^0.68.0
   battery_plus: ^6.0.0
+  http: ^1.1.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

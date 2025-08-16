@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../fitness_app_theme.dart';
 import '../../services/battery_service.dart';
+import '../../services/api_service.dart';
+import 'dart:async';
+import 'ip_settings_dialog.dart';
 
 class BatteryStatusView extends StatefulWidget {
 	const BatteryStatusView({super.key, this.animationController, this.animation});
@@ -16,17 +19,47 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 	final BatteryService _batteryService = BatteryService();
 	int _batteryLevel = 0;
 	String _status = 'unknown';
+	double _batteryVoltage = 0.0;
+	bool _ledRelayState = false;
+	Timer? _apiTimer;
 
 	@override
 	void initState() {
 		super.initState();
 		_loadCurrent();
+		_startApiPolling();
 		_batteryService.batteryStream?.listen((data) {
 			setState(() {
 				_batteryLevel = data.batteryLevel;
 				_status = data.status;
 			});
 		});
+	}
+
+	@override
+	void dispose() {
+		_apiTimer?.cancel();
+		super.dispose();
+	}
+
+	void _startApiPolling() {
+		// Fetch data immediately
+		_fetchApiData();
+		
+		// Then fetch every 5 seconds
+		_apiTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+			_fetchApiData();
+		});
+	}
+
+	Future<void> _fetchApiData() async {
+		final apiData = await ApiService.fetchData();
+		if (apiData != null && mounted) {
+			setState(() {
+				_batteryVoltage = apiData.batteryVoltage;
+				_ledRelayState = apiData.ledRelayState;
+			});
+		}
 	}
 
 	Future<void> _loadCurrent() async {
@@ -53,24 +86,84 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 				),
 				child: Padding(
 					padding: const EdgeInsets.all(16.0),
-					child: Row(
-						mainAxisAlignment: MainAxisAlignment.spaceBetween,
-						children: <Widget>[
-							Column(
-								crossAxisAlignment: CrossAxisAlignment.start,
+					child: Column(
+						children: [
+							// First row - Battery Level and Status
+							Row(
+								mainAxisAlignment: MainAxisAlignment.spaceBetween,
 								children: <Widget>[
-									Text('Battery Level', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
-									const SizedBox(height: 8.0),
-									Text('$_batteryLevel%', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 28, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyBlue)),
+									Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: <Widget>[
+											Text('Battery Level', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											const SizedBox(height: 8.0),
+											Text('$_batteryLevel%', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 28, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyBlue)),
+										],
+									),
+									Column(
+										crossAxisAlignment: CrossAxisAlignment.end,
+										children: <Widget>[
+											Text('Status', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											const SizedBox(height: 8.0),
+											Text(_status, style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 16, color: FitnessAppTheme.darkText)),
+										],
+									),
 								],
 							),
-							Column(
-								crossAxisAlignment: CrossAxisAlignment.end,
+							const SizedBox(height: 20.0),
+							// Divider
+							Container(
+								height: 1,
+								color: FitnessAppTheme.grey.withOpacity(0.3),
+							),
+							const SizedBox(height: 20.0),
+							// Second row - API Data from localhost:8080
+							Row(
+								mainAxisAlignment: MainAxisAlignment.spaceBetween,
 								children: <Widget>[
-									Text('Status', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
-									const SizedBox(height: 8.0),
-									Text(_status, style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 16, color: FitnessAppTheme.darkText)),
+									Column(
+										crossAxisAlignment: CrossAxisAlignment.start,
+										children: <Widget>[
+											Text('Battery Voltage', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											const SizedBox(height: 8.0),
+											Text('${_batteryVoltage.toStringAsFixed(1)}V', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 24, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyDarkBlue)),
+										],
+									),
+									Column(
+										crossAxisAlignment: CrossAxisAlignment.end,
+										children: <Widget>[
+											Text('LED Relay', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											const SizedBox(height: 8.0),
+											Row(
+												children: [
+													Container(
+														width: 12,
+														height: 12,
+														decoration: BoxDecoration(
+															color: _ledRelayState ? Colors.green : Colors.red,
+															shape: BoxShape.circle,
+														),
+													),
+													const SizedBox(width: 8),
+													Text(_ledRelayState ? 'ON' : 'OFF', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 16, fontWeight: FontWeight.w600, color: _ledRelayState ? Colors.green : Colors.red)),
+												],
+											),
+										],
+									),
 								],
+							),
+							const SizedBox(height: 12.0),
+							// Data source indicator
+							Center(
+								child: Text(
+									'Source: ${ApiService.getDataSource()}',
+									style: TextStyle(
+										fontFamily: FitnessAppTheme.fontName,
+										fontSize: 12,
+										color: FitnessAppTheme.grey,
+										fontStyle: FontStyle.italic,
+									),
+								),
 							),
 						],
 					),

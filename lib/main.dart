@@ -28,11 +28,11 @@ void main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((_) => runApp(const FitnessApp()));
+  ]).then((_) => runApp(const MPPTMonitor()));
 }
 
-class FitnessApp extends StatelessWidget {
-  const FitnessApp({super.key});
+class MPPTMonitor extends StatelessWidget {
+  const MPPTMonitor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class FitnessApp extends StatelessWidget {
       ),
     );
     return MaterialApp(
-      title: 'Battery Monitoring System',
+      title: 'MPPT BMS',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
