@@ -14,16 +14,17 @@ class BatteryService {
   static final BatteryService _instance = BatteryService._internal();
   factory BatteryService() => _instance;
   BatteryService._internal();
-  double _batteryVoltage = 11.0;
+  double _batteryVoltage = 12.8;
   double get batteryVoltage => _batteryVoltage;
    set batteryVoltage(double v) {
     _batteryVoltage = v;
     // optionally push update to stream so UI can listen:
     // _batteryStreamController?.add(/* create BatteryData or a simple wrapper */);
   }
-	int _batteryLevel = 0 ;
+  
+  // Computed battery level from voltage
   int get batteryLevel => lifepo4SocPack(_batteryVoltage);
-
+  
   // lifepo4SocPack(BatteryService().batteryVoltage)
   final Battery _battery = Battery();
   final DatabaseHelper _dbHelper = DatabaseHelper();
@@ -216,6 +217,45 @@ class BatteryService {
     final today = now.toIso8601String().split('T')[0];
     
     // Add sample battery data for the last 24 hours
+    // for (int i = 0; i < 48; i++) {
+    //   final time = now.subtract(Duration(minutes: i * 30));
+    //   final batteryData = BatteryData(
+    //     batteryLevel: 100 - (i * 2) + Random().nextInt(5),
+    //     status: i < 10 ? 'charging' : 'discharging',
+    //     temperature: 25.0 + Random().nextDouble() * 10.0,
+    //     timestamp: time.toIso8601String(),
+    //     consumptionRate: 2 + Random().nextInt(8),
+    //   );
+      // await _dbHelper.insertBatteryData(batteryData);
+    // }
+    
+    // Add sample app usage data
+    final sampleApps = [
+      {'name': 'Chrome', 'package': 'com.android.chrome', 'usage': 120, 'consumption': 15.5},
+      {'name': 'Instagram', 'package': 'com.instagram.android', 'usage': 45, 'consumption': 8.2},
+      {'name': 'YouTube', 'package': 'com.google.android.youtube', 'usage': 90, 'consumption': 12.3},
+      {'name': 'WhatsApp', 'package': 'com.whatsapp', 'usage': 30, 'consumption': 3.1},
+      {'name': 'Settings', 'package': 'com.android.settings', 'usage': 15, 'consumption': 1.2},
+    ];
+    
+    for (final app in sampleApps) {
+      final appUsageData = AppUsageData(
+        appName: app['name'] as String,
+        packageName: app['package'] as String,
+        usageTime: app['usage'] as int,
+        timestamp: today,
+        batteryConsumption: app['consumption'] as double,
+      );
+      await _dbHelper.insertAppUsageData(appUsageData);
+    }
+  }
+Future<void> addDataForWeb() async {
+    if (!isWeb) return; // Only for web platform
+    
+    final now = DateTime.now();
+    final today = now.toIso8601String().split('T')[0];
+    
+    // Add sample battery data for the last 24 hours
     for (int i = 0; i < 48; i++) {
       final time = now.subtract(Duration(minutes: i * 30));
       final batteryData = BatteryData(
@@ -248,5 +288,4 @@ class BatteryService {
       await _dbHelper.insertAppUsageData(appUsageData);
     }
   }
-
 }

@@ -3,7 +3,8 @@ import '../fitness_app_theme.dart';
 import '../../services/battery_service.dart';
 import '../../services/api_service.dart';
 import 'dart:async';
-import 'ip_settings_dialog.dart';
+import '../../models/battery_data.dart';
+// ...existing code...
 
 class BatteryStatusView extends StatefulWidget {
 	const BatteryStatusView({super.key, this.animationController, this.animation});
@@ -23,13 +24,15 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 	// double _batteryVoltage = 0.0;
 	bool _ledRelayState = false;
 	Timer? _apiTimer;
+	StreamSubscription<BatteryData>? _batterySub;
 
 	@override
 	void initState() {
 		super.initState();
 		_loadCurrent();
 		_startApiPolling();
-		_batteryService.batteryStream?.listen((data) {
+		_batterySub = _batteryService.batteryStream?.listen((data) {
+			if (!mounted) return;
 			setState(() {
 				_batteryLevel = data.batteryLevel;
 				_status = data.status;
@@ -40,6 +43,7 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 	@override
 	void dispose() {
 		_apiTimer?.cancel();
+		_batterySub?.cancel();
 		super.dispose();
 	}
 
@@ -65,6 +69,7 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 
 	Future<void> _loadCurrent() async {
 		final current = await _batteryService.getCurrentBatteryData();
+		if (!mounted) return;
 		if (current != null) {
 			setState(() {
 				_batteryLevel = current.batteryLevel;

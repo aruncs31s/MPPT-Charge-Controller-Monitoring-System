@@ -111,124 +111,124 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       ),
     );
     // App Usage Graph
-    listViews.add(
-      TitleView(
-        titleTxt: 'App Usage',
-        subTxt: 'Battery usage by app',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-      AppUsageGraphView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'App Usage',
+    //     subTxt: 'Battery usage by app',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   AppUsageGraphView(
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
     
-    listViews.add(
-      TitleView(
-        titleTxt: 'Usage Today',
-        subTxt: 'Apps',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'Usage Today',
+    //     subTxt: 'Apps',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
 
-    listViews.add(
-      AppUsageListView(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval((1 / count) * 5, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController,
-      ),
-    );
+    // listViews.add(
+    //   AppUsageListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 5, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController,
+    //   ),
+    // );
     
-    // Add App Usage Graph
-    listViews.add(
-      TitleView(
-        titleTxt: 'App Battery Usage',
-        subTxt: 'Distribution',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-      AppUsageGraphView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 7, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // // Add App Usage Graph
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'App Battery Usage',
+    //     subTxt: 'Distribution',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 6, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   AppUsageGraphView(
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 7, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
 
-    listViews.add(
-      TitleView(
-        titleTxt: 'Battery Health',
-        subTxt: 'Statistics',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 8, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'Battery Health',
+    //     subTxt: 'Statistics',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 8, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
 
-    listViews.add(
-      BatteryHealthView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 9, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-      TitleView(
-        titleTxt: 'Charging',
-        subTxt: 'Power Source',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 10, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   BatteryHealthView(
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 9, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'Charging',
+    //     subTxt: 'Power Source',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 10, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
 
-    listViews.add(
-      ChargingView(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval((1 / count) * 10, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-      BatteryTipsView(
-          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                  parent: widget.animationController!,
-                  curve: Interval((1 / count) * 8, 1.0,
-                      curve: Curves.fastOutSlowIn))),
-          animationController: widget.animationController!),
-    );
+    // listViews.add(
+    //   ChargingView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 10, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   BatteryTipsView(
+    //       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //           CurvedAnimation(
+    //               parent: widget.animationController!,
+    //               curve: Interval((1 / count) * 8, 1.0,
+    //                   curve: Curves.fastOutSlowIn))),
+    //       animationController: widget.animationController!),
+    // );
   }
 
   Future<bool> getData() async {

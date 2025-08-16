@@ -116,7 +116,7 @@ class ApiService {
 class ApiData {
   final double batteryVoltage;
   final bool ledRelayState;
-  
+
   ApiData({
     required this.batteryVoltage,
     required this.ledRelayState,
@@ -126,7 +126,7 @@ class ApiData {
     final data = json['data'] as Map<String, dynamic>;
     return ApiData(
       batteryVoltage: (data['battery_voltage'] as num).toDouble(),
-      ledRelayState: data['led_relayState'] as bool,
+      ledRelayState: true ,
     );
   }
   
@@ -138,4 +138,5 @@ class ApiData {
       }
     };
   }
+  
 }
