@@ -8,6 +8,7 @@ import '../fitness_app_theme.dart';
 import 'app_usage_list_view.dart';
 import '../ui_view/charging_view.dart';
 import '../../services/battery_service.dart';
+import '../../services/api_service.dart';
 import 'package:flutter/material.dart';
 
 class MyDiaryScreen extends StatefulWidget {
@@ -35,8 +36,9 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
             curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
     addAllListData();
     
-    // Initialize battery monitoring
-    _batteryService.startMonitoring();
+  // Load saved device IP (if any) and initialize battery monitoring
+  ApiService.loadSavedIP();
+  _batteryService.startMonitoring();
 
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
@@ -335,6 +337,15 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 ),
                               ),
                             ),
+                            // Settings button to configure device IP
+                            Padding(
+                              padding: const EdgeInsets.only(right: 4.0),
+                              child: IconButton(
+                                icon: const Icon(Icons.settings),
+                                tooltip: 'Device IP',
+                                onPressed: _showIpDialog,
+                              ),
+                            ),
                           ],
                         ),
                       )
@@ -348,4 +359,53 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       ],
     );
   }
+
+  // Show a dialog to enter and save the device IP address.
+  void _showIpDialog() {
+    final current = ApiService.baseUrl.replaceFirst(RegExp(r'^https?://'), '');
+    final controller = TextEditingController(text: current);
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Device IP'),
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(
+              labelText: 'IP or host (include :port if needed)',
+              hintText: 'e.g. 192.168.0.10:8080 or localhost:8080',
+            ),
+            keyboardType: TextInputType.url,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Save'),
+              onPressed: () async {
+                final input = controller.text.trim();
+                if (input.isNotEmpty) {
+                  await ApiService.saveIP(input);
+                  // Give user quick feedback
+                  if (mounted) {
+                    ScaffoldMessenger.of(this.context).showSnackBar(
+                      SnackBar(content: Text('Saved IP: ${ApiService.baseUrl}')),
+                    );
+                    setState(() {});
+                  }
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
