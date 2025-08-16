@@ -3,12 +3,28 @@ import 'dart:math';
 import 'package:battery_plus/battery_plus.dart';
 import '../models/battery_data.dart';
 import '../services/database_helper.dart';
+// Backwards-compatible top-level wrappers that forward to the service instance.
+int lifepo4SocCell(double vCell) => BatteryService().lifepo4SocCell(vCell);
+
+int lifepo4SocPack(double vPack, {int cellsInSeries = 4}) =>
+  BatteryService().lifepo4SocPack(vPack, cellsInSeries: cellsInSeries);
+
 
 class BatteryService {
   static final BatteryService _instance = BatteryService._internal();
   factory BatteryService() => _instance;
   BatteryService._internal();
+  double _batteryVoltage = 11.0;
+  double get batteryVoltage => _batteryVoltage;
+   set batteryVoltage(double v) {
+    _batteryVoltage = v;
+    // optionally push update to stream so UI can listen:
+    // _batteryStreamController?.add(/* create BatteryData or a simple wrapper */);
+  }
+	int _batteryLevel = 0 ;
+  int get batteryLevel => lifepo4SocPack(_batteryVoltage);
 
+  // lifepo4SocPack(BatteryService().batteryVoltage)
   final Battery _battery = Battery();
   final DatabaseHelper _dbHelper = DatabaseHelper();
   Timer? _monitoringTimer;
@@ -44,7 +60,11 @@ class BatteryService {
       
       if (isWeb) {
         // Web: Simulate battery data since battery_plus doesn't work on web
-        batteryLevel = 75 + Random().nextInt(25); // Random 75-100%
+        // batteryLevel = 75 + Random().nextInt(25); // Random 75-100%
+
+        batteryLevel = lifepo4SocPack(BatteryService()._batteryVoltage);
+        print(BatteryService()._batteryVoltage);
+        print(batteryLevel);
         batteryState = BatteryState.unknown;
       } else {
         // Mobile: Use real battery data
@@ -104,6 +124,47 @@ class BatteryService {
       default:
         return 'unknown';
     }
+  }
+
+  // Convert single-cell LiFePO4 voltage to approximate SoC percentage.
+  // Returns an integer percent (0-100).
+  int lifepo4SocCell(double vCell) {
+    // Voltage vs SoC map (approx, for one LiFePO4 cell at rest)
+    final List<List<double>> points = [
+      [2.50, 0],
+      [2.90, 10],
+      [3.10, 20],
+      [3.20, 50],
+      [3.30, 90],
+      [3.40, 95],
+      [3.45, 99],
+      [3.65, 100],
+    ];
+
+    if (vCell <= points[0][0]) return 0;
+    if (vCell >= points.last[0]) return 100;
+
+    // Linear interpolation between points
+    for (int i = 1; i < points.length; i++) {
+      double v0 = points[i - 1][0];
+      double s0 = points[i - 1][1];
+      double v1 = points[i][0];
+      double s1 = points[i][1];
+
+      if (vCell >= v0 && vCell <= v1) {
+        double soc = s0 + (s1 - s0) * (vCell - v0) / (v1 - v0);
+        return soc.round(); // return as integer percentage
+      }
+    }
+
+    return 0; // fallback
+  }
+
+  // Convert pack voltage to approximate SoC percentage given cells in series.
+  int lifepo4SocPack(double vPack, {int cellsInSeries = 4}) {
+    double vCell = vPack / cellsInSeries;
+    // int vCell = vPack / cellsInSeries;
+    return lifepo4SocCell(vCell);
   }
 
   Future<BatteryData?> getCurrentBatteryData() async {
@@ -187,4 +248,5 @@ class BatteryService {
       await _dbHelper.insertAppUsageData(appUsageData);
     }
   }
+
 }

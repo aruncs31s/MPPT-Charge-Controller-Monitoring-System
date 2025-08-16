@@ -17,9 +17,10 @@ class BatteryStatusView extends StatefulWidget {
 
 class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProviderStateMixin {
 	final BatteryService _batteryService = BatteryService();
-	int _batteryLevel = 0;
 	String _status = 'unknown';
-	double _batteryVoltage = 0.0;
+	int _batteryLevel = 0 ;
+
+	// double _batteryVoltage = 0.0;
 	bool _ledRelayState = false;
 	Timer? _apiTimer;
 
@@ -56,7 +57,7 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 		final apiData = await ApiService.fetchData();
 		if (apiData != null && mounted) {
 			setState(() {
-				_batteryVoltage = apiData.batteryVoltage;
+				BatteryService().batteryVoltage = apiData.batteryVoltage;
 				_ledRelayState = apiData.ledRelayState;
 			});
 		}
@@ -97,7 +98,7 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 										children: <Widget>[
 											Text('Battery Level', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
 											const SizedBox(height: 8.0),
-											Text('$_batteryLevel%', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 28, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyBlue)),
+											Text('${BatteryService().batteryLevel}%', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 28, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyBlue)),
 										],
 									),
 									Column(
@@ -126,7 +127,7 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 										children: <Widget>[
 											Text('Battery Voltage', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
 											const SizedBox(height: 8.0),
-											Text('${_batteryVoltage.toStringAsFixed(1)}V', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 24, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyDarkBlue)),
+											Text('${BatteryService().batteryVoltage.toStringAsFixed(1)}V', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 24, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyDarkBlue)),
 										],
 									),
 									Column(
