@@ -11,16 +11,15 @@ import '../../services/battery_service.dart';
 import '../../services/api_service.dart';
 import 'package:flutter/material.dart';
 
-class MyDiaryScreen extends StatefulWidget {
-  const MyDiaryScreen({super.key, this.animationController});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key, this.animationController});
 
   final AnimationController? animationController;
   @override
-  _MyDiaryScreenState createState() => _MyDiaryScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MyDiaryScreenState extends State<MyDiaryScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Animation<double>? topBarAnimation;
   final BatteryService _batteryService = BatteryService();
 
@@ -68,7 +67,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   }
 
   void addAllListData() {
-    const int count = 11; // Updated count for new components
+    const int count = 13; // Updated count to include Battery Health components
 
     // listViews.add(
     //   TitleView(
@@ -115,6 +114,29 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
             curve: Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn),
           ),
         ),
+        animationController: widget.animationController!,
+      ),
+    );
+
+    // Add Battery Health section
+    listViews.add(
+      TitleView(
+        titleTxt: 'Battery Health',
+        subTxt: 'Statistics',
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve:
+                Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+        animationController: widget.animationController!,
+      ),
+    );
+
+    listViews.add(
+      BatteryHealthView(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: widget.animationController!,
+            curve:
+                Interval((1 / count) * 5, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );

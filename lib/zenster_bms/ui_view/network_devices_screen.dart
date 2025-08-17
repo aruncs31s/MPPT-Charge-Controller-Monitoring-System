@@ -17,7 +17,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   String _scanProgress = '';
   final NetworkScannerService _scanner = NetworkScannerService();
   late AnimationController _animationController;
-  
+
   // Device IP information
   DeviceIPInfo? _currentDeviceIP;
   String _deviceName = 'Loading...';
@@ -30,10 +30,10 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
-    
+
     // Load device information
     _loadDeviceInfo();
-    
+
     // Start with a quick scan
     _performQuickScan();
   }
@@ -42,7 +42,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     try {
       final deviceIP = await DeviceIPService.getCurrentDeviceIP();
       final deviceName = await DeviceIPService.getDeviceName();
-      
+
       setState(() {
         _currentDeviceIP = deviceIP;
         _deviceName = deviceName;
@@ -98,7 +98,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
           });
         },
       );
-      
+
       setState(() {
         _devices = devices;
         _isScanning = false;
@@ -225,10 +225,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
                 ),
                 IconButton(
                   onPressed: () => _showCurrentDeviceDetails(),
-                  icon: Icon(
-                    Icons.info_outline,
-                    color: ZensterBMSTheme.white,
-                  ),
+                  icon: Icon(Icons.info_outline, color: ZensterBMSTheme.white),
                 ),
               ],
             ),
@@ -236,7 +233,9 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
             if (_loadingDeviceInfo)
               Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(ZensterBMSTheme.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    ZensterBMSTheme.white,
+                  ),
                 ),
               )
             else if (_currentDeviceIP != null) ...[
@@ -252,8 +251,8 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
                 _currentDeviceIP!.isWifi
                     ? Icons.wifi
                     : _currentDeviceIP!.isEthernet
-                        ? Icons.cable
-                        : Icons.device_unknown,
+                    ? Icons.cable
+                    : Icons.device_unknown,
               ),
               SizedBox(height: 8),
               _buildDeviceIPRow(
@@ -261,8 +260,8 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
                 _currentDeviceIP!.isWifi
                     ? 'WiFi'
                     : _currentDeviceIP!.isEthernet
-                        ? 'Ethernet'
-                        : 'Unknown',
+                    ? 'Ethernet'
+                    : 'Unknown',
                 Icons.network_check,
               ),
             ] else
@@ -283,11 +282,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   Widget _buildDeviceIPRow(String label, String value, IconData icon) {
     return Row(
       children: [
-        Icon(
-          icon,
-          color: ZensterBMSTheme.white.withOpacity(0.8),
-          size: 16,
-        ),
+        Icon(icon, color: ZensterBMSTheme.white.withOpacity(0.8), size: 16),
         SizedBox(width: 8),
         Text(
           '$label: ',
@@ -329,15 +324,21 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
           children: [
             _buildInfoRow('Device Name', _deviceName),
             if (_currentDeviceIP != null) ...[
-              _buildInfoRow('IP Address', _currentDeviceIP!.ipAddress ?? 'Unknown'),
-              _buildInfoRow('Interface', _currentDeviceIP!.interfaceName ?? 'Unknown'),
+              _buildInfoRow(
+                'IP Address',
+                _currentDeviceIP!.ipAddress ?? 'Unknown',
+              ),
+              _buildInfoRow(
+                'Interface',
+                _currentDeviceIP!.interfaceName ?? 'Unknown',
+              ),
               _buildInfoRow(
                 'Connection Type',
                 _currentDeviceIP!.isWifi
                     ? 'WiFi'
                     : _currentDeviceIP!.isEthernet
-                        ? 'Ethernet'
-                        : 'Unknown',
+                    ? 'Ethernet'
+                    : 'Unknown',
               ),
               if (_currentDeviceIP!.ipAddress != null)
                 _buildInfoRow(
@@ -422,11 +423,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.devices,
-            color: ZensterBMSTheme.nearlyDarkBlue,
-            size: 20,
-          ),
+          Icon(Icons.devices, color: ZensterBMSTheme.nearlyDarkBlue, size: 20),
           SizedBox(width: 8),
           Text(
             '${_devices.length} device${_devices.length != 1 ? 's' : ''} found',
@@ -447,11 +444,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.wifi_off,
-            size: 80,
-            color: ZensterBMSTheme.grey,
-          ),
+          Icon(Icons.wifi_off, size: 80, color: ZensterBMSTheme.grey),
           SizedBox(height: 16),
           Text(
             'No Devices Found',
@@ -531,14 +524,14 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: device.isOnline 
+            color: device.isOnline
                 ? ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1)
                 : ZensterBMSTheme.grey.withOpacity(0.1),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(
             _getDeviceIcon(device.ipAddress),
-            color: device.isOnline 
+            color: device.isOnline
                 ? ZensterBMSTheme.nearlyDarkBlue
                 : ZensterBMSTheme.grey,
             size: 24,

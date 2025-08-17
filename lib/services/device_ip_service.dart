@@ -48,14 +48,14 @@ class DeviceIPService {
       for (NetworkInterface interface in interfaces) {
         if (interface.addresses.isNotEmpty) {
           final address = interface.addresses.first;
-          
+
           // Skip loopback addresses
           if (address.address.startsWith('127.')) continue;
-          
+
           // Determine interface type
           bool isWifi = _isWifiInterface(interface.name);
           bool isEthernet = _isEthernetInterface(interface.name);
-          
+
           return DeviceIPInfo(
             ipAddress: address.address,
             interfaceName: interface.name,
@@ -80,7 +80,7 @@ class DeviceIPService {
           interfaceName: 'Web Browser',
           isWifi: false,
           isEthernet: false,
-        )
+        ),
       ];
     }
 
@@ -96,16 +96,18 @@ class DeviceIPService {
         for (InternetAddress address in interface.addresses) {
           // Skip loopback addresses
           if (address.address.startsWith('127.')) continue;
-          
+
           bool isWifi = _isWifiInterface(interface.name);
           bool isEthernet = _isEthernetInterface(interface.name);
-          
-          result.add(DeviceIPInfo(
-            ipAddress: address.address,
-            interfaceName: interface.name,
-            isWifi: isWifi,
-            isEthernet: isEthernet,
-          ));
+
+          result.add(
+            DeviceIPInfo(
+              ipAddress: address.address,
+              interfaceName: interface.name,
+              isWifi: isWifi,
+              isEthernet: isEthernet,
+            ),
+          );
         }
       }
     } catch (e) {
@@ -117,20 +119,22 @@ class DeviceIPService {
 
   static bool _isWifiInterface(String interfaceName) {
     final wifiPatterns = ['wlan', 'wifi', 'wlp', 'wlo'];
-    return wifiPatterns.any((pattern) => 
-        interfaceName.toLowerCase().contains(pattern));
+    return wifiPatterns.any(
+      (pattern) => interfaceName.toLowerCase().contains(pattern),
+    );
   }
 
   static bool _isEthernetInterface(String interfaceName) {
     final ethernetPatterns = ['eth', 'enp', 'eno', 'ens'];
-    return ethernetPatterns.any((pattern) => 
-        interfaceName.toLowerCase().contains(pattern));
+    return ethernetPatterns.any(
+      (pattern) => interfaceName.toLowerCase().contains(pattern),
+    );
   }
 
   /// Gets the network base IP (e.g., 192.168.1 from 192.168.1.100)
   static String? getNetworkBase(String? ipAddress) {
     if (ipAddress == null) return null;
-    
+
     final parts = ipAddress.split('.');
     if (parts.length >= 3) {
       return '${parts[0]}.${parts[1]}.${parts[2]}';
@@ -142,7 +146,7 @@ class DeviceIPService {
   static Future<String> getDeviceName() async {
     try {
       if (kIsWeb) return 'Web Browser';
-      
+
       final hostname = Platform.localHostname;
       return hostname.isNotEmpty ? hostname : 'Unknown Device';
     } catch (e) {

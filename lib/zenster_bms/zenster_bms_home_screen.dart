@@ -19,9 +19,7 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
 
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
-  Widget tabBody = Container(
-    color: ZensterBMSTheme.background,
-  );
+  Widget tabBody = Container(color: ZensterBMSTheme.background);
 
   @override
   void initState() {
@@ -31,8 +29,10 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
     tabIconsList[0].isSelected = true;
 
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
-    tabBody = MyDiaryScreen(animationController: animationController);
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    tabBody = HomeScreen(animationController: animationController);
     super.initState();
   }
 
@@ -54,12 +54,7 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
             if (!snapshot.hasData) {
               return const SizedBox();
             } else {
-              return Stack(
-                children: <Widget>[
-                  tabBody,
-                  bottomBar(),
-                ],
-              );
+              return Stack(children: <Widget>[tabBody, bottomBar()]);
             }
           },
         ),
@@ -75,9 +70,7 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
   Widget bottomBar() {
     return Column(
       children: <Widget>[
-        const Expanded(
-          child: SizedBox(),
-        ),
+        const Expanded(child: SizedBox()),
         BottomBarView(
           tabIconsList: tabIconsList,
           addClick: () {},
@@ -88,8 +81,9 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      MyDiaryScreen(animationController: animationController);
+                  tabBody = HomeScreen(
+                    animationController: animationController,
+                  );
                 });
               });
             } else if (index == 1) {
@@ -99,7 +93,8 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
                 }
                 setState(() {
                   tabBody = TrainingScreen(
-                      animationController: animationController);
+                    animationController: animationController,
+                  );
                 });
               });
             } else if (index == 2) {
@@ -118,7 +113,8 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
                 }
                 setState(() {
                   tabBody = TrainingScreen(
-                      animationController: animationController);
+                    animationController: animationController,
+                  );
                 });
               });
             }
