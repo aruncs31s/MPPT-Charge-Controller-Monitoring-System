@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 
 class IPSettingsDialog extends StatefulWidget {
   const IPSettingsDialog({super.key});
@@ -83,14 +83,14 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
     return AlertDialog(
       title: Row(
         children: [
-          Icon(Icons.settings, color: FitnessAppTheme.nearlyBlue),
+          Icon(Icons.settings, color: ZensterBMSTheme.nearlyBlue),
           SizedBox(width: 8),
           Text(
             'Device Settings',
             style: TextStyle(
-              fontFamily: FitnessAppTheme.fontName,
+              fontFamily: ZensterBMSTheme.fontName,
               fontWeight: FontWeight.w600,
-              color: FitnessAppTheme.darkText,
+              color: ZensterBMSTheme.darkText,
             ),
           ),
         ],
@@ -104,9 +104,9 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
             Text(
               'Enter Device IP Address:',
               style: TextStyle(
-                fontFamily: FitnessAppTheme.fontName,
+                fontFamily: ZensterBMSTheme.fontName,
                 fontSize: 14,
-                color: FitnessAppTheme.darkText,
+                color: ZensterBMSTheme.darkText,
               ),
             ),
             SizedBox(height: 12),
@@ -117,7 +117,7 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                prefixIcon: Icon(Icons.computer, color: FitnessAppTheme.grey),
+                prefixIcon: Icon(Icons.computer, color: ZensterBMSTheme.grey),
                 suffixIcon: _isLoading 
                   ? SizedBox(
                       width: 20,
@@ -126,7 +126,7 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
                         padding: EdgeInsets.all(12),
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(FitnessAppTheme.nearlyBlue),
+                          valueColor: AlwaysStoppedAnimation<Color>(ZensterBMSTheme.nearlyBlue),
                         ),
                       ),
                     )
@@ -139,7 +139,7 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
             Container(
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: FitnessAppTheme.nearlyWhite,
+                color: ZensterBMSTheme.nearlyWhite,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -148,35 +148,35 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
                   Text(
                     'Examples:',
                     style: TextStyle(
-                      fontFamily: FitnessAppTheme.fontName,
+                      fontFamily: ZensterBMSTheme.fontName,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: FitnessAppTheme.darkText,
+                      color: ZensterBMSTheme.darkText,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
                     '• localhost:8080',
                     style: TextStyle(
-                      fontFamily: FitnessAppTheme.fontName,
+                      fontFamily: ZensterBMSTheme.fontName,
                       fontSize: 12,
-                      color: FitnessAppTheme.grey,
+                      color: ZensterBMSTheme.grey,
                     ),
                   ),
                   Text(
                     '• 192.168.1.100:8080',
                     style: TextStyle(
-                      fontFamily: FitnessAppTheme.fontName,
+                      fontFamily: ZensterBMSTheme.fontName,
                       fontSize: 12,
-                      color: FitnessAppTheme.grey,
+                      color: ZensterBMSTheme.grey,
                     ),
                   ),
                   Text(
                     '• 10.0.0.50:3000',
                     style: TextStyle(
-                      fontFamily: FitnessAppTheme.fontName,
+                      fontFamily: ZensterBMSTheme.fontName,
                       fontSize: 12,
-                      color: FitnessAppTheme.grey,
+                      color: ZensterBMSTheme.grey,
                     ),
                   ),
                 ],
@@ -191,15 +191,15 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
           child: Text(
             'Cancel',
             style: TextStyle(
-              fontFamily: FitnessAppTheme.fontName,
-              color: FitnessAppTheme.grey,
+              fontFamily: ZensterBMSTheme.fontName,
+              color: ZensterBMSTheme.grey,
             ),
           ),
         ),
         ElevatedButton(
           onPressed: _isLoading ? null : _saveAndTest,
           style: ElevatedButton.styleFrom(
-            backgroundColor: FitnessAppTheme.nearlyBlue,
+            backgroundColor: ZensterBMSTheme.nearlyBlue,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
@@ -208,7 +208,7 @@ class _IPSettingsDialogState extends State<IPSettingsDialog> {
           child: Text(
             _isLoading ? 'Testing...' : 'Save & Test',
             style: TextStyle(
-              fontFamily: FitnessAppTheme.fontName,
+              fontFamily: ZensterBMSTheme.fontName,
               fontWeight: FontWeight.w600,
             ),
           ),

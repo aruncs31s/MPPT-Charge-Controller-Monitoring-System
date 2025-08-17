@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'fitness_app/fitness_app_home_screen.dart';
+import 'fitness_app/zenster_bms_home_screen.dart';
 import 'app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'services/sample_data_service.dart';
@@ -49,7 +49,7 @@ class MPPTMonitor extends StatelessWidget {
       ),
     );
     return MaterialApp(
-      title: 'MPPT BMS',
+      title: 'Zenster MPPT BMS',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -57,7 +57,7 @@ class MPPTMonitor extends StatelessWidget {
         platform: TargetPlatform.iOS,
         dividerTheme: DividerThemeData(color: Color(0xFFE0E0E0)),
       ),
-      home: FitnessAppHomeScreen(),
+      home: ZensterBMSHomeScreen(),
     );
   }
 }

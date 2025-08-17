@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 
 class RunningView extends StatelessWidget {
   final AnimationController? animationController;
@@ -29,7 +29,7 @@ class RunningView extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 16, bottom: 16),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: FitnessAppTheme.white,
+                            color: ZensterBMSTheme.white,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(8.0),
                                 bottomLeft: Radius.circular(8.0),
@@ -37,7 +37,7 @@ class RunningView extends StatelessWidget {
                                 topRight: Radius.circular(8.0)),
                             boxShadow: <BoxShadow>[
                               BoxShadow(
-                                  color: FitnessAppTheme.grey.withOpacity(0.4),
+                                  color: ZensterBMSTheme.grey.withOpacity(0.4),
                                   offset: Offset(1.1, 1.1),
                                   blurRadius: 10.0),
                             ],
@@ -73,12 +73,12 @@ class RunningView extends StatelessWidget {
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontFamily:
-                                                FitnessAppTheme.fontName,
+                                                ZensterBMSTheme.fontName,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
                                             letterSpacing: 0.0,
                                             color:
-                                                FitnessAppTheme.nearlyDarkBlue,
+                                                ZensterBMSTheme.nearlyDarkBlue,
                                           ),
                                         ),
                                       ),
@@ -95,11 +95,11 @@ class RunningView extends StatelessWidget {
                                       "Keep it up\nand stick to your plan!",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 10,
                                         letterSpacing: 0.0,
-                                        color: FitnessAppTheme.grey
+                                        color: ZensterBMSTheme.grey
                                             .withOpacity(0.5),
                                       ),
                                     ),

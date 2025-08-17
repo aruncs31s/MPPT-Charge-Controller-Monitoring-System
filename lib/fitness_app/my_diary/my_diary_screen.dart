@@ -4,7 +4,7 @@ import '../ui_view/battery_status_view.dart';
 import '../ui_view/consumption_graph_view.dart';
 import '../ui_view/app_usage_graph_view.dart';
 import '../ui_view/title_view.dart';
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import 'app_usage_list_view.dart';
 import '../ui_view/charging_view.dart';
 import '../../services/battery_service.dart';
@@ -239,7 +239,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: FitnessAppTheme.background,
+      color: ZensterBMSTheme.background,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -295,13 +295,13 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                     0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(topBarOpacity),
+                    color: ZensterBMSTheme.white.withOpacity(topBarOpacity),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: FitnessAppTheme.grey
+                          color: ZensterBMSTheme.grey
                               .withOpacity(0.4 * topBarOpacity),
                           offset: const Offset(1.1, 1.1),
                           blurRadius: 10.0),
@@ -325,14 +325,14 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Zenster BMS',
+                                  'Zenster MPPT BMS',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
+                                    fontFamily: ZensterBMSTheme.fontName,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 22 + 6 - 6 * topBarOpacity,
                                     letterSpacing: 1.2,
-                                    color: FitnessAppTheme.darkerText,
+                                    color: ZensterBMSTheme.darkerText,
                                   ),
                                 ),
                               ),

@@ -1,4 +1,4 @@
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import '../../main.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -25,7 +25,7 @@ class MediterranesnDietView extends StatelessWidget {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.white,
+                  color: ZensterBMSTheme.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -33,7 +33,7 @@ class MediterranesnDietView extends StatelessWidget {
                       topRight: Radius.circular(68.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.2),
+                        color: ZensterBMSTheme.grey.withOpacity(0.2),
                         offset: Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -79,11 +79,11 @@ class MediterranesnDietView extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
-                                                      FitnessAppTheme.fontName,
+                                                      ZensterBMSTheme.fontName,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 16,
                                                   letterSpacing: -0.1,
-                                                  color: FitnessAppTheme.grey
+                                                  color: ZensterBMSTheme.grey
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
@@ -109,12 +109,12 @@ class MediterranesnDietView extends StatelessWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
+                                                          ZensterBMSTheme
                                                               .fontName,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       fontSize: 16,
-                                                      color: FitnessAppTheme
+                                                      color: ZensterBMSTheme
                                                           .darkerText,
                                                     ),
                                                   ),
@@ -128,13 +128,13 @@ class MediterranesnDietView extends StatelessWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
+                                                          ZensterBMSTheme
                                                               .fontName,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       fontSize: 12,
                                                       letterSpacing: -0.2,
-                                                      color: FitnessAppTheme
+                                                      color: ZensterBMSTheme
                                                           .grey
                                                           .withOpacity(0.5),
                                                     ),
@@ -178,11 +178,11 @@ class MediterranesnDietView extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
-                                                      FitnessAppTheme.fontName,
+                                                      ZensterBMSTheme.fontName,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 16,
                                                   letterSpacing: -0.1,
-                                                  color: FitnessAppTheme.grey
+                                                  color: ZensterBMSTheme.grey
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
@@ -208,12 +208,12 @@ class MediterranesnDietView extends StatelessWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
+                                                          ZensterBMSTheme
                                                               .fontName,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       fontSize: 16,
-                                                      color: FitnessAppTheme
+                                                      color: ZensterBMSTheme
                                                           .darkerText,
                                                     ),
                                                   ),
@@ -227,13 +227,13 @@ class MediterranesnDietView extends StatelessWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
-                                                          FitnessAppTheme
+                                                          ZensterBMSTheme
                                                               .fontName,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       fontSize: 12,
                                                       letterSpacing: -0.2,
-                                                      color: FitnessAppTheme
+                                                      color: ZensterBMSTheme
                                                           .grey
                                                           .withOpacity(0.5),
                                                     ),
@@ -262,13 +262,13 @@ class MediterranesnDietView extends StatelessWidget {
                                       width: 100,
                                       height: 100,
                                       decoration: BoxDecoration(
-                                        color: FitnessAppTheme.white,
+                                        color: ZensterBMSTheme.white,
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(100.0),
                                         ),
                                         border: Border.all(
                                             width: 4,
-                                            color: FitnessAppTheme
+                                            color: ZensterBMSTheme
                                                 .nearlyDarkBlue
                                                 .withOpacity(0.2)),
                                       ),
@@ -283,11 +283,11 @@ class MediterranesnDietView extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
-                                                  FitnessAppTheme.fontName,
+                                                  ZensterBMSTheme.fontName,
                                               fontWeight: FontWeight.normal,
                                               fontSize: 24,
                                               letterSpacing: 0.0,
-                                              color: FitnessAppTheme
+                                              color: ZensterBMSTheme
                                                   .nearlyDarkBlue,
                                             ),
                                           ),
@@ -296,11 +296,11 @@ class MediterranesnDietView extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
-                                                  FitnessAppTheme.fontName,
+                                                  ZensterBMSTheme.fontName,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 12,
                                               letterSpacing: 0.0,
-                                              color: FitnessAppTheme.grey
+                                              color: ZensterBMSTheme.grey
                                                   .withOpacity(0.5),
                                             ),
                                           ),
@@ -313,7 +313,7 @@ class MediterranesnDietView extends StatelessWidget {
                                     child: CustomPaint(
                                       painter: CurvePainter(
                                           colors: [
-                                            FitnessAppTheme.nearlyDarkBlue,
+                                            ZensterBMSTheme.nearlyDarkBlue,
                                             HexColor("#8A98E8"),
                                             HexColor("#8A98E8")
                                           ],
@@ -339,7 +339,7 @@ class MediterranesnDietView extends StatelessWidget {
                       child: Container(
                         height: 2,
                         decoration: BoxDecoration(
-                          color: FitnessAppTheme.background,
+                          color: ZensterBMSTheme.background,
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                         ),
                       ),
@@ -358,11 +358,11 @@ class MediterranesnDietView extends StatelessWidget {
                                   'Carbs',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
+                                    fontFamily: ZensterBMSTheme.fontName,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                     letterSpacing: -0.2,
-                                    color: FitnessAppTheme.darkText,
+                                    color: ZensterBMSTheme.darkText,
                                   ),
                                 ),
                                 Padding(
@@ -401,11 +401,11 @@ class MediterranesnDietView extends StatelessWidget {
                                     '12g left',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontFamily: ZensterBMSTheme.fontName,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
                                       color:
-                                          FitnessAppTheme.grey.withOpacity(0.5),
+                                          ZensterBMSTheme.grey.withOpacity(0.5),
                                     ),
                                   ),
                                 ),
@@ -425,11 +425,11 @@ class MediterranesnDietView extends StatelessWidget {
                                       'Protein',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,
                                         letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
+                                        color: ZensterBMSTheme.darkText,
                                       ),
                                     ),
                                     Padding(
@@ -470,10 +470,10 @@ class MediterranesnDietView extends StatelessWidget {
                                         '30g left',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontFamily: ZensterBMSTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
-                                          color: FitnessAppTheme.grey
+                                          color: ZensterBMSTheme.grey
                                               .withOpacity(0.5),
                                         ),
                                       ),
@@ -495,11 +495,11 @@ class MediterranesnDietView extends StatelessWidget {
                                     Text(
                                       'Fat',
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,
                                         letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
+                                        color: ZensterBMSTheme.darkText,
                                       ),
                                     ),
                                     Padding(
@@ -541,10 +541,10 @@ class MediterranesnDietView extends StatelessWidget {
                                         '10g left',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontFamily: ZensterBMSTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
-                                          color: FitnessAppTheme.grey
+                                          color: ZensterBMSTheme.grey
                                               .withOpacity(0.5),
                                         ),
                                       ),

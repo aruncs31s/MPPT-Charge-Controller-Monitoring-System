@@ -2,17 +2,17 @@ import 'models/tabIcon_data.dart';
 import 'training/training_screen.dart';
 import 'package:flutter/material.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
-import 'fitness_app_theme.dart';
+import 'zenster_bms_theme.dart';
 import 'my_diary/my_diary_screen.dart';
 
-class FitnessAppHomeScreen extends StatefulWidget {
-  const FitnessAppHomeScreen({super.key});
+class ZensterBMSHomeScreen extends StatefulWidget {
+  const ZensterBMSHomeScreen({super.key});
 
   @override
-  _FitnessAppHomeScreenState createState() => _FitnessAppHomeScreenState();
+  _ZensterBMSHomeScreenState createState() => _ZensterBMSHomeScreenState();
 }
 
-class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
+class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
     with TickerProviderStateMixin {
   AnimationController? animationController;
 
@@ -24,9 +24,9 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
   @override
   void initState() {
-    for (var tab in tabIconsList) {
+    tabIconsList.forEach((TabIconData tab) {
       tab.isSelected = false;
-    }
+    });
     tabIconsList[0].isSelected = true;
 
     animationController = AnimationController(
@@ -97,8 +97,8 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      TrainingScreen(animationController: animationController);
+                  tabBody = TrainingScreen(
+                      animationController: animationController);
                 });
               });
             }

@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import '../../models/battery_data.dart';
 import '../../services/battery_service.dart';
 
@@ -59,7 +59,7 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.white,
+                  color: ZensterBMSTheme.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.0),
                     bottomLeft: Radius.circular(8.0),
@@ -68,7 +68,7 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
                   ),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: FitnessAppTheme.grey.withOpacity(0.2),
+                      color: ZensterBMSTheme.grey.withOpacity(0.2),
                       offset: Offset(1.1, 1.1),
                       blurRadius: 10.0,
                     ),
@@ -89,11 +89,11 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
                                   'Battery Consumption',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
+                                    fontFamily: ZensterBMSTheme.fontName,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                     letterSpacing: -0.1,
-                                    color: FitnessAppTheme.darkText,
+                                    color: ZensterBMSTheme.darkText,
                                   ),
                                 ),
                                 Padding(
@@ -102,11 +102,11 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
                                     'Last 24 hours',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontFamily: ZensterBMSTheme.fontName,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 12,
                                       letterSpacing: 0.0,
-                                      color: FitnessAppTheme.grey
+                                      color: ZensterBMSTheme.grey
                                           .withOpacity(0.5),
                                     ),
                                   ),
@@ -116,14 +116,14 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: FitnessAppTheme.nearlyWhite,
+                              color: ZensterBMSTheme.nearlyWhite,
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Icon(
                                 Icons.battery_charging_full,
-                                color: FitnessAppTheme.nearlyDarkBlue,
+                                color: ZensterBMSTheme.nearlyDarkBlue,
                                 size: 16,
                               ),
                             ),
@@ -157,10 +157,10 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
         child: Text(
           'No data available',
           style: TextStyle(
-            fontFamily: FitnessAppTheme.fontName,
+            fontFamily: ZensterBMSTheme.fontName,
             fontWeight: FontWeight.w400,
             fontSize: 14,
-            color: FitnessAppTheme.grey,
+            color: ZensterBMSTheme.grey,
           ),
         ),
       );
@@ -175,13 +175,13 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
           verticalInterval: 1,
           getDrawingHorizontalLine: (value) {
             return FlLine(
-              color: FitnessAppTheme.grey.withOpacity(0.2),
+              color: ZensterBMSTheme.grey.withOpacity(0.2),
               strokeWidth: 1,
             );
           },
           getDrawingVerticalLine: (value) {
             return FlLine(
-              color: FitnessAppTheme.grey.withOpacity(0.2),
+              color: ZensterBMSTheme.grey.withOpacity(0.2),
               strokeWidth: 1,
             );
           },
@@ -208,7 +208,7 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
                     child: Text(
                       '${time.hour}:${time.minute.toString().padLeft(2, '0')}',
                       style: TextStyle(
-                        color: FitnessAppTheme.grey,
+                        color: ZensterBMSTheme.grey,
                         fontWeight: FontWeight.w400,
                         fontSize: 10,
                       ),
@@ -227,7 +227,7 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
                 return Text(
                   '${value.toInt()}%',
                   style: TextStyle(
-                    color: FitnessAppTheme.grey,
+                    color: ZensterBMSTheme.grey,
                     fontWeight: FontWeight.w400,
                     fontSize: 10,
                   ),
@@ -240,7 +240,7 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
         borderData: FlBorderData(
           show: true,
           border: Border.all(
-            color: FitnessAppTheme.grey.withOpacity(0.2),
+            color: ZensterBMSTheme.grey.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -259,8 +259,8 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
             isCurved: true,
             gradient: LinearGradient(
               colors: [
-                FitnessAppTheme.nearlyDarkBlue,
-                FitnessAppTheme.nearlyBlue,
+                ZensterBMSTheme.nearlyDarkBlue,
+                ZensterBMSTheme.nearlyBlue,
               ],
             ),
             barWidth: 3,
@@ -272,8 +272,8 @@ class _ConsumptionGraphViewState extends State<ConsumptionGraphView> {
               show: true,
               gradient: LinearGradient(
                 colors: [
-                  FitnessAppTheme.nearlyDarkBlue.withOpacity(0.1),
-                  FitnessAppTheme.nearlyBlue.withOpacity(0.1),
+                  ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1),
+                  ZensterBMSTheme.nearlyBlue.withOpacity(0.1),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,

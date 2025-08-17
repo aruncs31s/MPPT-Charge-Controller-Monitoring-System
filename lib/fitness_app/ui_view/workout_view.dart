@@ -1,6 +1,6 @@
 import '../../main.dart';
 import 'package:flutter/material.dart';
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 
 class WorkoutView extends StatelessWidget {
   final AnimationController? animationController;
@@ -24,7 +24,7 @@ class WorkoutView extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    FitnessAppTheme.nearlyDarkBlue,
+                    ZensterBMSTheme.nearlyDarkBlue,
                     HexColor("#6F56E8")
                   ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                   borderRadius: BorderRadius.only(
@@ -34,7 +34,7 @@ class WorkoutView extends StatelessWidget {
                       topRight: Radius.circular(68.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.6),
+                        color: ZensterBMSTheme.grey.withOpacity(0.6),
                         offset: Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -49,11 +49,11 @@ class WorkoutView extends StatelessWidget {
                         'Next workout',
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          fontFamily: FitnessAppTheme.fontName,
+                          fontFamily: ZensterBMSTheme.fontName,
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
                           letterSpacing: 0.0,
-                          color: FitnessAppTheme.white,
+                          color: ZensterBMSTheme.white,
                         ),
                       ),
                       Padding(
@@ -62,11 +62,11 @@ class WorkoutView extends StatelessWidget {
                           'Legs Toning and\nGlutes Workout at Home',
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                            fontFamily: FitnessAppTheme.fontName,
+                            fontFamily: ZensterBMSTheme.fontName,
                             fontWeight: FontWeight.normal,
                             fontSize: 20,
                             letterSpacing: 0.0,
-                            color: FitnessAppTheme.white,
+                            color: ZensterBMSTheme.white,
                           ),
                         ),
                       ),
@@ -83,7 +83,7 @@ class WorkoutView extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 4),
                               child: Icon(
                                 Icons.timer,
-                                color: FitnessAppTheme.white,
+                                color: ZensterBMSTheme.white,
                                 size: 16,
                               ),
                             ),
@@ -93,11 +93,11 @@ class WorkoutView extends StatelessWidget {
                                 '68 min',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontFamily: FitnessAppTheme.fontName,
+                                  fontFamily: ZensterBMSTheme.fontName,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                   letterSpacing: 0.0,
-                                  color: FitnessAppTheme.white,
+                                  color: ZensterBMSTheme.white,
                                 ),
                               ),
                             ),
@@ -106,11 +106,11 @@ class WorkoutView extends StatelessWidget {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                color: FitnessAppTheme.nearlyWhite,
+                                color: ZensterBMSTheme.nearlyWhite,
                                 shape: BoxShape.circle,
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                      color: FitnessAppTheme.nearlyBlack
+                                      color: ZensterBMSTheme.nearlyBlack
                                           .withOpacity(0.4),
                                       offset: Offset(8.0, 8.0),
                                       blurRadius: 8.0),

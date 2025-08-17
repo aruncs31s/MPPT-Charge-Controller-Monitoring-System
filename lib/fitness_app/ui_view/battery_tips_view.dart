@@ -1,4 +1,4 @@
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import '../../main.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class BatteryTipsView extends StatelessWidget {
                             ),
                             child: Icon(
                               Icons.tips_and_updates,
-                              color: FitnessAppTheme.nearlyDarkBlue,
+                              color: ZensterBMSTheme.nearlyDarkBlue,
                               size: 32,
                             ),
                           ),
@@ -64,11 +64,11 @@ class BatteryTipsView extends StatelessWidget {
                                     'Keep your battery between 20% and 80% for optimal health and longevity',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontFamily: ZensterBMSTheme.fontName,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14,
                                       letterSpacing: 0.0,
-                                      color: FitnessAppTheme.darkText,
+                                      color: ZensterBMSTheme.darkText,
                                     ),
                                   ),
                                 ),
@@ -93,7 +93,7 @@ class BatteryTipsView extends StatelessWidget {
                             ),
                             child: Icon(
                               Icons.ac_unit,
-                              color: FitnessAppTheme.nearlyDarkBlue,
+                              color: ZensterBMSTheme.nearlyDarkBlue,
                               size: 32,
                             ),
                           ),
@@ -120,11 +120,11 @@ class BatteryTipsView extends StatelessWidget {
                                     'Avoid extreme temperatures as they can damage your battery permanently',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontFamily: ZensterBMSTheme.fontName,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14,
                                       letterSpacing: 0.0,
-                                      color: FitnessAppTheme.darkText,
+                                      color: ZensterBMSTheme.darkText,
                                     ),
                                   ),
                                 ),
@@ -149,7 +149,7 @@ class BatteryTipsView extends StatelessWidget {
                             ),
                             child: Icon(
                               Icons.bedtime,
-                              color: FitnessAppTheme.nearlyDarkBlue,
+                              color: ZensterBMSTheme.nearlyDarkBlue,
                               size: 32,
                             ),
                           ),
@@ -176,11 +176,11 @@ class BatteryTipsView extends StatelessWidget {
                                     'Enable optimized battery charging to reduce chemical aging',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontFamily: ZensterBMSTheme.fontName,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 14,
                                       letterSpacing: 0.0,
-                                      color: FitnessAppTheme.darkText,
+                                      color: ZensterBMSTheme.darkText,
                                     ),
                                   ),
                                 ),

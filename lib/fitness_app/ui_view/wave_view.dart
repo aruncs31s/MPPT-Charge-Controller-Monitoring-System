@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 
@@ -88,7 +88,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
               clipper: WaveClipper(animationController!.value, animList1),
               child: new Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyDarkBlue.withOpacity(0.5),
+                  color: ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.5),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(80.0),
                       bottomLeft: Radius.circular(80.0),
@@ -96,8 +96,8 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                       topRight: Radius.circular(80.0)),
                   gradient: LinearGradient(
                     colors: [
-                      FitnessAppTheme.nearlyDarkBlue.withOpacity(0.2),
-                      FitnessAppTheme.nearlyDarkBlue.withOpacity(0.5)
+                      ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.2),
+                      ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.5)
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -109,11 +109,11 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
               clipper: WaveClipper(animationController!.value, animList2),
               child: new Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyDarkBlue,
+                  color: ZensterBMSTheme.nearlyDarkBlue,
                   gradient: LinearGradient(
                     colors: [
-                      FitnessAppTheme.nearlyDarkBlue.withOpacity(0.4),
-                      FitnessAppTheme.nearlyDarkBlue
+                      ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.4),
+                      ZensterBMSTheme.nearlyDarkBlue
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -137,11 +137,11 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                       widget.percentageValue.round().toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: FitnessAppTheme.fontName,
+                        fontFamily: ZensterBMSTheme.fontName,
                         fontWeight: FontWeight.w500,
                         fontSize: 24,
                         letterSpacing: 0.0,
-                        color: FitnessAppTheme.white,
+                        color: ZensterBMSTheme.white,
                       ),
                     ),
                     Padding(
@@ -150,11 +150,11 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                         '%',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontFamily: FitnessAppTheme.fontName,
+                          fontFamily: ZensterBMSTheme.fontName,
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
                           letterSpacing: 0.0,
-                          color: FitnessAppTheme.white,
+                          color: ZensterBMSTheme.white,
                         ),
                       ),
                     ),
@@ -175,7 +175,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                   width: 2,
                   height: 2,
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(0.4),
+                    color: ZensterBMSTheme.white.withOpacity(0.4),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -194,7 +194,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                   width: 4,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(0.4),
+                    color: ZensterBMSTheme.white.withOpacity(0.4),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -213,7 +213,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                   width: 3,
                   height: 3,
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(0.4),
+                    color: ZensterBMSTheme.white.withOpacity(0.4),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -230,7 +230,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                   width: 4,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: FitnessAppTheme.white.withOpacity(
+                    color: ZensterBMSTheme.white.withOpacity(
                         animationController!.status == AnimationStatus.reverse
                             ? 0.0
                             : 0.4),

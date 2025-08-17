@@ -1,4 +1,4 @@
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import 'package:flutter/material.dart';
 
 class AppUsageListView extends StatefulWidget {
@@ -109,14 +109,14 @@ class AppUsageView extends StatelessWidget {
                       decoration: BoxDecoration(
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: FitnessAppTheme.grey.withOpacity(0.6),
+                              color: ZensterBMSTheme.grey.withOpacity(0.6),
                               offset: const Offset(1.1, 4.0),
                               blurRadius: 8.0),
                         ],
                         gradient: LinearGradient(
                           colors: <Color>[
-                            appUsageData!.startColor ?? FitnessAppTheme.nearlyDarkBlue,
-                            appUsageData!.endColor ?? FitnessAppTheme.nearlyDarkBlue,
+                            appUsageData!.startColor ?? ZensterBMSTheme.nearlyDarkBlue,
+                            appUsageData!.endColor ?? ZensterBMSTheme.nearlyDarkBlue,
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -139,11 +139,11 @@ class AppUsageView extends StatelessWidget {
                               appUsageData!.titleTxt,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontFamily: FitnessAppTheme.fontName,
+                                fontFamily: ZensterBMSTheme.fontName,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 letterSpacing: 0.2,
-                                color: FitnessAppTheme.white,
+                                color: ZensterBMSTheme.white,
                               ),
                             ),
                             Expanded(
@@ -157,11 +157,11 @@ class AppUsageView extends StatelessWidget {
                                     Text(
                                       appUsageData!.usage,
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 24,
                                         letterSpacing: 0.2,
-                                        color: FitnessAppTheme.white,
+                                        color: ZensterBMSTheme.white,
                                       ),
                                     ),
                                     Padding(
@@ -170,11 +170,11 @@ class AppUsageView extends StatelessWidget {
                                       child: Text(
                                         'h',
                                         style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontFamily: ZensterBMSTheme.fontName,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 10,
                                           letterSpacing: 0.2,
-                                          color: FitnessAppTheme.white,
+                                          color: ZensterBMSTheme.white,
                                         ),
                                       ),
                                     ),
@@ -185,11 +185,11 @@ class AppUsageView extends StatelessWidget {
                             appUsageData?.assetsImage != null
                                 ? Container(
                                     decoration: BoxDecoration(
-                                      color: FitnessAppTheme.nearlyWhite,
+                                      color: ZensterBMSTheme.nearlyWhite,
                                       shape: BoxShape.circle,
                                       boxShadow: <BoxShadow>[
                                         BoxShadow(
-                                            color: FitnessAppTheme.nearlyBlack
+                                            color: ZensterBMSTheme.nearlyBlack
                                                 .withOpacity(0.4),
                                             offset: Offset(8.0, 8.0),
                                             blurRadius: 8.0),
@@ -200,7 +200,7 @@ class AppUsageView extends StatelessWidget {
                                           Radius.circular(60.0)),
                                       child: Icon(
                                         appUsageData!.assetsImage ?? Icons.apps,
-                                        color: appUsageData!.startColor ?? FitnessAppTheme.nearlyDarkBlue,
+                                        color: appUsageData!.startColor ?? ZensterBMSTheme.nearlyDarkBlue,
                                         size: 24,
                                       ),
                                     ))
@@ -217,7 +217,7 @@ class AppUsageView extends StatelessWidget {
                       width: 84,
                       height: 84,
                       decoration: BoxDecoration(
-                        color: FitnessAppTheme.nearlyWhite.withOpacity(0.2),
+                        color: ZensterBMSTheme.nearlyWhite.withOpacity(0.2),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -230,12 +230,12 @@ class AppUsageView extends StatelessWidget {
                       height: 68,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: FitnessAppTheme.nearlyWhite.withOpacity(0.9),
+                          color: ZensterBMSTheme.nearlyWhite.withOpacity(0.9),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           appUsageData!.assetsImage ?? Icons.apps,
-                          color: appUsageData!.startColor ?? FitnessAppTheme.nearlyDarkBlue,
+                          color: appUsageData!.startColor ?? ZensterBMSTheme.nearlyDarkBlue,
                           size: 32,
                         ),
                       ),

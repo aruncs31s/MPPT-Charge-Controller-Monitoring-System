@@ -1,5 +1,5 @@
-name: fitness_app_standalone
-description: A standalone Flutter fitness tracking app.
+name: zenster_mppt_bms
+description: Zenster MPPT BMS - Battery Management System for solar charge controllers.
 publish_to: 'none'
 version: 1.0.0+1
 

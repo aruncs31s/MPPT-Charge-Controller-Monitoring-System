@@ -1,4 +1,4 @@
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import 'package:flutter/material.dart';
 
 class BatteryHealthView extends StatelessWidget {
@@ -23,7 +23,7 @@ class BatteryHealthView extends StatelessWidget {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.white,
+                  color: ZensterBMSTheme.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -31,7 +31,7 @@ class BatteryHealthView extends StatelessWidget {
                       topRight: Radius.circular(68.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: FitnessAppTheme.grey.withOpacity(0.2),
+                        color: ZensterBMSTheme.grey.withOpacity(0.2),
                         offset: Offset(1.1, 1.1),
                         blurRadius: 10.0),
                   ],
@@ -52,11 +52,11 @@ class BatteryHealthView extends StatelessWidget {
                               'Battery Capacity',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontFamily: FitnessAppTheme.fontName,
+                                  fontFamily: ZensterBMSTheme.fontName,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                   letterSpacing: -0.1,
-                                  color: FitnessAppTheme.darkText),
+                                  color: ZensterBMSTheme.darkText),
                             ),
                           ),
                           Row(
@@ -74,10 +74,10 @@ class BatteryHealthView extends StatelessWidget {
                                       '4,500',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 32,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: ZensterBMSTheme.nearlyDarkBlue,
                                       ),
                                     ),
                                   ),
@@ -88,11 +88,11 @@ class BatteryHealthView extends StatelessWidget {
                                       'mAh',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18,
                                         letterSpacing: -0.2,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: ZensterBMSTheme.nearlyDarkBlue,
                                       ),
                                     ),
                                   ),
@@ -107,7 +107,7 @@ class BatteryHealthView extends StatelessWidget {
                                     children: <Widget>[
                                       Icon(
                                         Icons.access_time,
-                                        color: FitnessAppTheme.grey
+                                        color: ZensterBMSTheme.grey
                                             .withOpacity(0.5),
                                         size: 16,
                                       ),
@@ -119,11 +119,11 @@ class BatteryHealthView extends StatelessWidget {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
-                                                FitnessAppTheme.fontName,
+                                                ZensterBMSTheme.fontName,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
                                             letterSpacing: 0.0,
-                                            color: FitnessAppTheme.grey
+                                            color: ZensterBMSTheme.grey
                                                 .withOpacity(0.5),
                                           ),
                                         ),
@@ -137,11 +137,11 @@ class BatteryHealthView extends StatelessWidget {
                                       'Battery Monitor',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                         letterSpacing: 0.0,
-                                        color: FitnessAppTheme.nearlyDarkBlue,
+                                        color: ZensterBMSTheme.nearlyDarkBlue,
                                       ),
                                     ),
                                   ),
@@ -158,7 +158,7 @@ class BatteryHealthView extends StatelessWidget {
                       child: Container(
                         height: 2,
                         decoration: BoxDecoration(
-                          color: FitnessAppTheme.background,
+                          color: ZensterBMSTheme.background,
                           borderRadius: BorderRadius.all(Radius.circular(4.0)),
                         ),
                       ),
@@ -177,11 +177,11 @@ class BatteryHealthView extends StatelessWidget {
                                   '95%',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
+                                    fontFamily: ZensterBMSTheme.fontName,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                     letterSpacing: -0.2,
-                                    color: FitnessAppTheme.darkText,
+                                    color: ZensterBMSTheme.darkText,
                                   ),
                                 ),
                                 Padding(
@@ -190,11 +190,11 @@ class BatteryHealthView extends StatelessWidget {
                                     'Max Capacity',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontFamily: ZensterBMSTheme.fontName,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
                                       color:
-                                          FitnessAppTheme.grey.withOpacity(0.5),
+                                          ZensterBMSTheme.grey.withOpacity(0.5),
                                     ),
                                   ),
                                 ),
@@ -214,11 +214,11 @@ class BatteryHealthView extends StatelessWidget {
                                       'Good',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,
                                         letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
+                                        color: ZensterBMSTheme.darkText,
                                       ),
                                     ),
                                     Padding(
@@ -227,10 +227,10 @@ class BatteryHealthView extends StatelessWidget {
                                         'Health Status',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontFamily: ZensterBMSTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
-                                          color: FitnessAppTheme.grey
+                                          color: ZensterBMSTheme.grey
                                               .withOpacity(0.5),
                                         ),
                                       ),
@@ -252,11 +252,11 @@ class BatteryHealthView extends StatelessWidget {
                                     Text(
                                       '248',
                                       style: TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontFamily: ZensterBMSTheme.fontName,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,
                                         letterSpacing: -0.2,
-                                        color: FitnessAppTheme.darkText,
+                                        color: ZensterBMSTheme.darkText,
                                       ),
                                     ),
                                     Padding(
@@ -265,10 +265,10 @@ class BatteryHealthView extends StatelessWidget {
                                         'Cycle Count',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
+                                          fontFamily: ZensterBMSTheme.fontName,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
-                                          color: FitnessAppTheme.grey
+                                          color: ZensterBMSTheme.grey
                                               .withOpacity(0.5),
                                         ),
                                       ),

@@ -35,8 +35,8 @@ class ZensterBMSTheme {
     fontWeight: FontWeight.bold,
     fontSize: 36,
     letterSpacing: 0.4,
-  height: 0.9,
-  color: darkerText,
+    height: 0.9,
+    color: darkerText,
   );
 
   static const TextStyle headline = TextStyle(

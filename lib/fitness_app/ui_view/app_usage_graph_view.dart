@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import '../../models/battery_data.dart';
 import '../../services/battery_service.dart';
 
@@ -59,7 +59,7 @@ class _AppUsageGraphViewState extends State<AppUsageGraphView> {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.white,
+                  color: ZensterBMSTheme.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.0),
                     bottomLeft: Radius.circular(8.0),
@@ -68,7 +68,7 @@ class _AppUsageGraphViewState extends State<AppUsageGraphView> {
                   ),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: FitnessAppTheme.grey.withOpacity(0.2),
+                      color: ZensterBMSTheme.grey.withOpacity(0.2),
                       offset: Offset(1.1, 1.1),
                       blurRadius: 10.0,
                     ),
@@ -89,11 +89,11 @@ class _AppUsageGraphViewState extends State<AppUsageGraphView> {
                                   'App Battery Usage',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontFamily: FitnessAppTheme.fontName,
+                                    fontFamily: ZensterBMSTheme.fontName,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                     letterSpacing: -0.1,
-                                    color: FitnessAppTheme.darkText,
+                                    color: ZensterBMSTheme.darkText,
                                   ),
                                 ),
                                 Padding(
@@ -102,11 +102,11 @@ class _AppUsageGraphViewState extends State<AppUsageGraphView> {
                                     'Today',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontFamily: ZensterBMSTheme.fontName,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 12,
                                       letterSpacing: 0.0,
-                                      color: FitnessAppTheme.grey
+                                      color: ZensterBMSTheme.grey
                                           .withOpacity(0.5),
                                     ),
                                   ),
@@ -116,14 +116,14 @@ class _AppUsageGraphViewState extends State<AppUsageGraphView> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: FitnessAppTheme.nearlyWhite,
+                              color: ZensterBMSTheme.nearlyWhite,
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Icon(
                                 Icons.apps,
-                                color: FitnessAppTheme.nearlyDarkBlue,
+                                color: ZensterBMSTheme.nearlyDarkBlue,
                                 size: 16,
                               ),
                             ),
@@ -157,18 +157,18 @@ class _AppUsageGraphViewState extends State<AppUsageGraphView> {
         child: Text(
           'No app usage data available',
           style: TextStyle(
-            fontFamily: FitnessAppTheme.fontName,
+            fontFamily: ZensterBMSTheme.fontName,
             fontWeight: FontWeight.w400,
             fontSize: 14,
-            color: FitnessAppTheme.grey,
+            color: ZensterBMSTheme.grey,
           ),
         ),
       );
     }
 
     final colors = [
-      FitnessAppTheme.nearlyDarkBlue,
-      FitnessAppTheme.nearlyBlue,
+      ZensterBMSTheme.nearlyDarkBlue,
+      ZensterBMSTheme.nearlyBlue,
       Colors.orange,
       Colors.green,
       Colors.purple,

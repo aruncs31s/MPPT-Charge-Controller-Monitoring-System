@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../fitness_app_theme.dart';
+import '../zenster_bms_theme.dart';
 import '../../services/battery_service.dart';
 import '../../services/api_service.dart';
 import 'dart:async';
@@ -84,10 +84,10 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 			padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
 			child: Container(
 				decoration: BoxDecoration(
-					color: FitnessAppTheme.white,
+					color: ZensterBMSTheme.white,
 					borderRadius: const BorderRadius.all(Radius.circular(8.0)),
 					boxShadow: <BoxShadow>[
-						BoxShadow(color: FitnessAppTheme.nearlyBlack.withOpacity(0.1), offset: const Offset(0,2), blurRadius: 8.0),
+						BoxShadow(color: ZensterBMSTheme.nearlyBlack.withOpacity(0.1), offset: const Offset(0,2), blurRadius: 8.0),
 					],
 				),
 				child: Padding(
@@ -101,17 +101,17 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 									Column(
 										crossAxisAlignment: CrossAxisAlignment.start,
 										children: <Widget>[
-											Text('Battery Level', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											Text('Battery Level', style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 14, color: ZensterBMSTheme.darkText)),
 											const SizedBox(height: 8.0),
-											Text('${BatteryService().batteryLevel}%', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 28, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyBlue)),
+											Text('${BatteryService().batteryLevel}%', style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 28, fontWeight: FontWeight.bold, color: ZensterBMSTheme.nearlyBlue)),
 										],
 									),
 									Column(
 										crossAxisAlignment: CrossAxisAlignment.end,
 										children: <Widget>[
-											Text('Status', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											Text('Status', style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 14, color: ZensterBMSTheme.darkText)),
 											const SizedBox(height: 8.0),
-											Text(_status, style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 16, color: FitnessAppTheme.darkText)),
+											Text(_status, style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 16, color: ZensterBMSTheme.darkText)),
 										],
 									),
 								],
@@ -120,7 +120,7 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 							// Divider
 							Container(
 								height: 1,
-								color: FitnessAppTheme.grey.withOpacity(0.3),
+								color: ZensterBMSTheme.grey.withOpacity(0.3),
 							),
 							const SizedBox(height: 20.0),
 							// Second row - API Data from localhost:8080
@@ -130,15 +130,15 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 									Column(
 										crossAxisAlignment: CrossAxisAlignment.start,
 										children: <Widget>[
-											Text('Battery Voltage', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											Text('Battery Voltage', style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 14, color: ZensterBMSTheme.darkText)),
 											const SizedBox(height: 8.0),
-											Text('${BatteryService().batteryVoltage.toStringAsFixed(1)}V', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 24, fontWeight: FontWeight.bold, color: FitnessAppTheme.nearlyDarkBlue)),
+											Text('${BatteryService().batteryVoltage.toStringAsFixed(1)}V', style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 24, fontWeight: FontWeight.bold, color: ZensterBMSTheme.nearlyDarkBlue)),
 										],
 									),
 									Column(
 										crossAxisAlignment: CrossAxisAlignment.end,
 										children: <Widget>[
-											Text('LED Relay', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 14, color: FitnessAppTheme.darkText)),
+											Text('LED Relay', style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 14, color: ZensterBMSTheme.darkText)),
 											const SizedBox(height: 8.0),
 											Row(
 												children: [
@@ -151,7 +151,7 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 														),
 													),
 													const SizedBox(width: 8),
-													Text(_ledRelayState ? 'ON' : 'OFF', style: TextStyle(fontFamily: FitnessAppTheme.fontName, fontSize: 16, fontWeight: FontWeight.w600, color: _ledRelayState ? Colors.green : Colors.red)),
+													Text(_ledRelayState ? 'ON' : 'OFF', style: TextStyle(fontFamily: ZensterBMSTheme.fontName, fontSize: 16, fontWeight: FontWeight.w600, color: _ledRelayState ? Colors.green : Colors.red)),
 												],
 											),
 										],
@@ -164,9 +164,9 @@ class _BatteryStatusViewState extends State<BatteryStatusView> with TickerProvid
 								child: Text(
 									'Source: ${ApiService.getDataSource()}',
 									style: TextStyle(
-										fontFamily: FitnessAppTheme.fontName,
+										fontFamily: ZensterBMSTheme.fontName,
 										fontSize: 12,
-										color: FitnessAppTheme.grey,
+										color: ZensterBMSTheme.grey,
 										fontStyle: FontStyle.italic,
 									),
 								),
