@@ -18,11 +18,13 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   String _scanProgress = '';
   final NetworkScannerService _scanner = NetworkScannerService();
   late AnimationController _animationController;
-  
+
   // Device IP information
   DeviceIPInfo? _currentDeviceIP;
   String _deviceName = 'Loading...';
-  bool _loadingDeviceInfo = true;  @override
+  bool _loadingDeviceInfo = true;
+
+  @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
@@ -150,7 +152,8 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
         children: [
           _buildCurrentDeviceInfo(),
           if (_isScanning) _buildScanningIndicator(),
-          if (_devices.isNotEmpty || _customDevices.isNotEmpty) _buildDeviceCount(),
+          if (_devices.isNotEmpty || _customDevices.isNotEmpty)
+            _buildDeviceCount(),
           Expanded(
             child: (_devices.isEmpty && _customDevices.isEmpty) && !_isScanning
                 ? _buildEmptyState()
@@ -365,6 +368,112 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     );
   }
 
+  void _showAddDeviceDialog() {
+    final ipController = TextEditingController();
+    final nameController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Add Custom Device',
+          style: TextStyle(
+            fontFamily: ZensterBMSTheme.fontName,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: ipController,
+              decoration: InputDecoration(
+                labelText: 'IP Address',
+                hintText: 'e.g., 192.168.1.100',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+            ),
+            SizedBox(height: 16),
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: 'Device Name (Optional)',
+                hintText: 'e.g., Solar Controller',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: ZensterBMSTheme.grey),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final ip = ipController.text.trim();
+              if (ip.isNotEmpty && _isValidIP(ip)) {
+                _addCustomDevice(ip, nameController.text.trim());
+                Navigator.of(context).pop();
+              } else {
+                // Show error
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Please enter a valid IP address'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ZensterBMSTheme.nearlyDarkBlue,
+              foregroundColor: ZensterBMSTheme.white,
+            ),
+            child: Text('Add Device'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool _isValidIP(String ip) {
+    final parts = ip.split('.');
+    if (parts.length != 4) return false;
+
+    for (String part in parts) {
+      final num = int.tryParse(part);
+      if (num == null || num < 0 || num > 255) return false;
+    }
+    return true;
+  }
+
+  void _addCustomDevice(String ip, String customName) {
+    final device = NetworkDevice(
+      ipAddress: ip,
+      hostname: customName.isNotEmpty ? customName : null,
+      isOnline: true, // Assume custom devices are online
+    );
+
+    setState(() {
+      _customDevices.add(device);
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Device added: $ip'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
   Widget _buildScanningIndicator() {
     return Container(
       padding: EdgeInsets.all(16),
@@ -518,9 +627,9 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   }
 
   Widget _buildDeviceList() {
-    // Combine scanned devices and custom devices
+    // Combine custom devices (show first) and scanned devices
     final allDevices = [..._customDevices, ..._devices];
-    
+
     return ListView.builder(
       padding: EdgeInsets.all(16),
       itemCount: allDevices.length,
@@ -532,7 +641,11 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     );
   }
 
-  Widget _buildDeviceCard(NetworkDevice device, int index, [bool isCustomDevice = false]) {
+  Widget _buildDeviceCard(
+    NetworkDevice device,
+    int index, [
+    bool isCustomDevice = false,
+  ]) {
     return Container(
       margin: EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -555,17 +668,19 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
             color: isCustomDevice
                 ? ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1)
                 : device.isOnline
-                    ? ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1)
-                    : ZensterBMSTheme.grey.withOpacity(0.1),
+                ? ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1)
+                : ZensterBMSTheme.grey.withOpacity(0.1),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(
-            isCustomDevice ? Icons.person_add : _getDeviceIcon(device.ipAddress),
+            isCustomDevice
+                ? Icons.person_add
+                : _getDeviceIcon(device.ipAddress),
             color: isCustomDevice
                 ? ZensterBMSTheme.nearlyDarkBlue
                 : device.isOnline
-                    ? ZensterBMSTheme.nearlyDarkBlue
-                    : ZensterBMSTheme.grey,
+                ? ZensterBMSTheme.nearlyDarkBlue
+                : ZensterBMSTheme.grey,
             size: 24,
           ),
         ),
@@ -600,12 +715,6 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
                 ),
               ),
           ],
-        ),
-            fontFamily: ZensterBMSTheme.fontName,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: ZensterBMSTheme.darkText,
-          ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -654,10 +763,24 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
             ),
           ],
         ),
-        trailing: IconButton(
-          icon: Icon(Icons.info_outline, color: ZensterBMSTheme.grey),
-          onPressed: () => _showDeviceInfo(device),
-        ),
+        trailing: isCustomDevice
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.info_outline, color: ZensterBMSTheme.grey),
+                    onPressed: () => _showDeviceInfo(device, isCustomDevice),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _removeCustomDevice(device),
+                  ),
+                ],
+              )
+            : IconButton(
+                icon: Icon(Icons.info_outline, color: ZensterBMSTheme.grey),
+                onPressed: () => _showDeviceInfo(device, isCustomDevice),
+              ),
       ),
     );
   }
@@ -674,7 +797,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     }
   }
 
-  void _showDeviceInfo(NetworkDevice device) {
+  void _showDeviceInfo(NetworkDevice device, [bool isCustomDevice = false]) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -695,6 +818,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
             _buildInfoRow('Status', device.isOnline ? 'Online' : 'Offline'),
             if (device.responseTime != null)
               _buildInfoRow('Response Time', '${device.responseTime}ms'),
+            if (isCustomDevice) _buildInfoRow('Type', 'Custom Device'),
           ],
         ),
         actions: [
@@ -704,6 +828,53 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
               'Close',
               style: TextStyle(color: ZensterBMSTheme.nearlyDarkBlue),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _removeCustomDevice(NetworkDevice device) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Remove Device',
+          style: TextStyle(
+            fontFamily: ZensterBMSTheme.fontName,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Text(
+          'Are you sure you want to remove ${device.ipAddress}?',
+          style: TextStyle(fontFamily: ZensterBMSTheme.fontName),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: ZensterBMSTheme.grey),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _customDevices.remove(device);
+              });
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Device removed: ${device.ipAddress}'),
+                  backgroundColor: Colors.orange,
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Remove'),
           ),
         ],
       ),
