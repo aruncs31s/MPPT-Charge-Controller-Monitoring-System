@@ -13,17 +13,16 @@ class NetworkDevicesScreen extends StatefulWidget {
 class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     with TickerProviderStateMixin {
   List<NetworkDevice> _devices = [];
+  List<NetworkDevice> _customDevices = []; // Store manually added devices
   bool _isScanning = false;
   String _scanProgress = '';
   final NetworkScannerService _scanner = NetworkScannerService();
   late AnimationController _animationController;
-
+  
   // Device IP information
   DeviceIPInfo? _currentDeviceIP;
   String _deviceName = 'Loading...';
-  bool _loadingDeviceInfo = true;
-
-  @override
+  bool _loadingDeviceInfo = true;  @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
@@ -133,6 +132,11 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
         iconTheme: IconThemeData(color: ZensterBMSTheme.darkText),
         actions: [
           IconButton(
+            icon: Icon(Icons.add),
+            onPressed: _showAddDeviceDialog,
+            tooltip: 'Add Device',
+          ),
+          IconButton(
             icon: Icon(Icons.refresh),
             onPressed: _isScanning ? null : _performQuickScan,
           ),
@@ -146,9 +150,9 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
         children: [
           _buildCurrentDeviceInfo(),
           if (_isScanning) _buildScanningIndicator(),
-          if (_devices.isNotEmpty) _buildDeviceCount(),
+          if (_devices.isNotEmpty || _customDevices.isNotEmpty) _buildDeviceCount(),
           Expanded(
-            child: _devices.isEmpty && !_isScanning
+            child: (_devices.isEmpty && _customDevices.isEmpty) && !_isScanning
                 ? _buildEmptyState()
                 : _buildDeviceList(),
           ),
@@ -407,6 +411,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   }
 
   Widget _buildDeviceCount() {
+    final totalDevices = _devices.length + _customDevices.length;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: EdgeInsets.all(12),
@@ -426,7 +431,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
           Icon(Icons.devices, color: ZensterBMSTheme.nearlyDarkBlue, size: 20),
           SizedBox(width: 8),
           Text(
-            '${_devices.length} device${_devices.length != 1 ? 's' : ''} found',
+            '$totalDevices device${totalDevices != 1 ? 's' : ''} found',
             style: TextStyle(
               fontFamily: ZensterBMSTheme.fontName,
               fontWeight: FontWeight.w500,
@@ -434,6 +439,25 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
               color: ZensterBMSTheme.darkText,
             ),
           ),
+          if (_customDevices.isNotEmpty) ...[
+            SizedBox(width: 8),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '${_customDevices.length} custom',
+                style: TextStyle(
+                  fontFamily: ZensterBMSTheme.fontName,
+                  fontSize: 12,
+                  color: ZensterBMSTheme.nearlyDarkBlue,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -494,17 +518,21 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   }
 
   Widget _buildDeviceList() {
+    // Combine scanned devices and custom devices
+    final allDevices = [..._customDevices, ..._devices];
+    
     return ListView.builder(
       padding: EdgeInsets.all(16),
-      itemCount: _devices.length,
+      itemCount: allDevices.length,
       itemBuilder: (context, index) {
-        final device = _devices[index];
-        return _buildDeviceCard(device, index);
+        final device = allDevices[index];
+        final isCustomDevice = index < _customDevices.length;
+        return _buildDeviceCard(device, index, isCustomDevice);
       },
     );
   }
 
-  Widget _buildDeviceCard(NetworkDevice device, int index) {
+  Widget _buildDeviceCard(NetworkDevice device, int index, [bool isCustomDevice = false]) {
     return Container(
       margin: EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -524,22 +552,55 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: device.isOnline
+            color: isCustomDevice
                 ? ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1)
-                : ZensterBMSTheme.grey.withOpacity(0.1),
+                : device.isOnline
+                    ? ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1)
+                    : ZensterBMSTheme.grey.withOpacity(0.1),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(
-            _getDeviceIcon(device.ipAddress),
-            color: device.isOnline
+            isCustomDevice ? Icons.person_add : _getDeviceIcon(device.ipAddress),
+            color: isCustomDevice
                 ? ZensterBMSTheme.nearlyDarkBlue
-                : ZensterBMSTheme.grey,
+                : device.isOnline
+                    ? ZensterBMSTheme.nearlyDarkBlue
+                    : ZensterBMSTheme.grey,
             size: 24,
           ),
         ),
-        title: Text(
-          device.ipAddress,
-          style: TextStyle(
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                device.ipAddress,
+                style: TextStyle(
+                  fontFamily: ZensterBMSTheme.fontName,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: ZensterBMSTheme.darkText,
+                ),
+              ),
+            ),
+            if (isCustomDevice)
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  'Custom',
+                  style: TextStyle(
+                    fontFamily: ZensterBMSTheme.fontName,
+                    fontSize: 10,
+                    color: ZensterBMSTheme.nearlyDarkBlue,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+          ],
+        ),
             fontFamily: ZensterBMSTheme.fontName,
             fontWeight: FontWeight.w600,
             fontSize: 16,
