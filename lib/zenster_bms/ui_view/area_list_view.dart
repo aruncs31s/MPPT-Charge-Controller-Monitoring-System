@@ -16,10 +16,10 @@ class _AreaListViewState extends State<AreaListView>
     with TickerProviderStateMixin {
   AnimationController? animationController;
   List<String> areaListData = <String>[
-    'assets/fitness_app/area1.png',
-    'assets/fitness_app/area2.png',
-    'assets/fitness_app/area3.png',
-    'assets/fitness_app/area1.png',
+    'assets/zenster_bms/area1.png',
+    'assets/zenster_bms/area2.png',
+    'assets/zenster_bms/area3.png',
+    'assets/zenster_bms/area1.png',
   ];
 
   @override

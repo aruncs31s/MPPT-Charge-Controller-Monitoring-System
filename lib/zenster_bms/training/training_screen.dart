@@ -2,6 +2,7 @@ import '../ui_view/area_list_view.dart';
 import '../ui_view/running_view.dart';
 import '../ui_view/title_view.dart';
 import '../ui_view/workout_view.dart';
+import '../ui_view/network_devices_card.dart';
 import 'package:flutter/material.dart';
 
 import '../zenster_bms_theme.dart';
@@ -56,61 +57,84 @@ class _TrainingScreenState extends State<TrainingScreen>
   }
 
   void addAllListData() {
-    const int count = 5;
+    const int count = 7;
 
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'Your program',
+    //     subTxt: 'Details',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    // Add Network Devices Section
     listViews.add(
       TitleView(
-        titleTxt: 'Your program',
-        subTxt: 'Details',
+        titleTxt: 'Network Devices',
+        // subTxt: 'View all',
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+                Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
 
     listViews.add(
-      WorkoutView(
+      NetworkDevicesCard(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-    listViews.add(
-      RunningView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+                Interval((1 / count) * 1.5, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),
     );
 
-    listViews.add(
-      TitleView(
-        titleTxt: 'Area of focus',
-        subTxt: 'more',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   WorkoutView(
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+    // listViews.add(
+    //   RunningView(
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
 
-    listViews.add(
-      AreaListView(
-        mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: widget.animationController!,
-                curve: Interval((1 / count) * 5, 1.0,
-                    curve: Curves.fastOutSlowIn))),
-        mainScreenAnimationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'Area of focus',
+    //     subTxt: 'more',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 4, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
+
+    // listViews.add(
+    //   AreaListView(
+    //     mainScreenAnimation: Tween<double>(begin: 0.0, end: 1.0).animate(
+    //         CurvedAnimation(
+    //             parent: widget.animationController!,
+    //             curve: Interval((1 / count) * 5, 1.0,
+    //                 curve: Curves.fastOutSlowIn))),
+    //     mainScreenAnimationController: widget.animationController!,
+    //   ),
+    // );
   }
 
   Future<bool> getData() async {
@@ -207,7 +231,7 @@ class _TrainingScreenState extends State<TrainingScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Training',
+                                  'Devices',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: ZensterBMSTheme.fontName,
@@ -282,6 +306,42 @@ class _TrainingScreenState extends State<TrainingScreen>
                             ),
                           ],
                         ),
+                        //               color: ZensterBMSTheme.grey,
+                        //               size: 18,
+                        //             ),
+                        //           ),
+                        //           Text(
+                        //             '15 May',
+                        //             textAlign: TextAlign.left,
+                        //             style: TextStyle(
+                        //               fontFamily: ZensterBMSTheme.fontName,
+                        //               fontWeight: FontWeight.normal,
+                        //               fontSize: 18,
+                        //               letterSpacing: -0.2,
+                        //               color: ZensterBMSTheme.darkerText,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       height: 38,
+                        //       width: 38,
+                        //       child: InkWell(
+                        //         highlightColor: Colors.transparent,
+                        //         borderRadius: const BorderRadius.all(
+                        //             Radius.circular(32.0)),
+                        //         onTap: () {},
+                        //         child: Center(
+                        //           child: Icon(
+                        //             Icons.keyboard_arrow_right,
+                        //             color: ZensterBMSTheme.grey,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       )
                     ],
                   ),

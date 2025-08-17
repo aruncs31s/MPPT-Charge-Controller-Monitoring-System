@@ -58,7 +58,7 @@ flutter:
     assets:
         - assets/images/
         - assets/design_course/
-        - assets/fitness_app/
+        - assets/zenster_bms/
         - assets/hotel/
         - assets/introduction_animation/
 

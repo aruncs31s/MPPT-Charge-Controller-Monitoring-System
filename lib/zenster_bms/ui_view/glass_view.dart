@@ -71,7 +71,7 @@ class GlassView extends StatelessWidget {
                         child: SizedBox(
                           width: 80,
                           height: 80,
-                          child: Image.asset("assets/fitness_app/glass.png"),
+                          child: Image.asset("assets/zenster_bms/glass.png"),
                         ),
                       )
                     ],

@@ -68,17 +68,17 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   void addAllListData() {
     const int count = 11; // Updated count for new components
 
-    listViews.add(
-      TitleView(
-        titleTxt: 'Battery Status',
-        subTxt: 'Current NO',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
+    // listViews.add(
+    //   TitleView(
+    //     titleTxt: 'Battery Status',
+    //     subTxt: 'Current NO',
+    //     animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+    //         parent: widget.animationController!,
+    //         curve:
+    //             Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+    //     animationController: widget.animationController!,
+    //   ),
+    // );
     listViews.add(
       BatteryStatusView(
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -110,6 +110,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animationController: widget.animationController!,
       ),
     );
+    
     // App Usage Graph
     // listViews.add(
     //   TitleView(
@@ -325,7 +326,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Zenster MPPT BMS',
+                                  'Zenster MPPT',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontFamily: ZensterBMSTheme.fontName,

@@ -175,7 +175,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                           width: 24,
                                           height: 24,
                                           child: Image.asset(
-                                              'assets/fitness_app/bell.png'),
+                                              'assets/zenster_bms/bell.png'),
                                         ),
                                         Flexible(
                                           child: Text(

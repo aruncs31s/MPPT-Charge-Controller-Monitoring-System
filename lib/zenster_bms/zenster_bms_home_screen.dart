@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'zenster_bms_theme.dart';
 import 'my_diary/my_diary_screen.dart';
+import 'ui_view/network_devices_screen.dart';
 
 class ZensterBMSHomeScreen extends StatefulWidget {
   const ZensterBMSHomeScreen({super.key});
@@ -81,7 +82,7 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
           tabIconsList: tabIconsList,
           addClick: () {},
           changeIndex: (int index) {
-            if (index == 0 || index == 2) {
+            if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -91,7 +92,26 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
                       MyDiaryScreen(animationController: animationController);
                 });
               });
-            } else if (index == 1 || index == 3) {
+            } else if (index == 1) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = TrainingScreen(
+                      animationController: animationController);
+                });
+              });
+            } else if (index == 2) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = NetworkDevicesScreen();
+                });
+              });
+            } else if (index == 3) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
