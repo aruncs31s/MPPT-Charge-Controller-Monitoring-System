@@ -1,10 +1,11 @@
 import 'models/tabIcon_data.dart';
-import 'training/training_screen.dart';
+import 'analytics/analytics_screen.dart';
 import 'package:flutter/material.dart';
 import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'zenster_bms_theme.dart';
 import 'my_diary/my_diary_screen.dart';
 import 'ui_view/network_devices_screen.dart';
+import 'company/company_info_screen.dart';
 
 class ZensterBMSHomeScreen extends StatefulWidget {
   const ZensterBMSHomeScreen({super.key});
@@ -92,7 +93,7 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody = TrainingScreen(
+                  tabBody = AnalyticsScreen(
                     animationController: animationController,
                   );
                 });
@@ -112,7 +113,7 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody = TrainingScreen(
+                  tabBody = CompanyInfoScreen(
                     animationController: animationController,
                   );
                 });
