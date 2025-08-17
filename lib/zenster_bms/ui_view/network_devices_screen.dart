@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import '../zenster_bms_theme.dart';
 import '../../services/network_scanner_service.dart';
 import '../../services/device_ip_service.dart';
@@ -34,6 +36,9 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
 
     // Load device information
     _loadDeviceInfo();
+    
+    // Load saved custom devices
+    _loadSavedDevices();
 
     // Start with a quick scan
     _performQuickScan();
@@ -53,6 +58,47 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
       setState(() {
         _loadingDeviceInfo = false;
       });
+    }
+  }
+
+  Future<void> _loadSavedDevices() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final savedDevicesJson = prefs.getStringList('custom_devices') ?? [];
+      
+      final savedDevices = savedDevicesJson.map((deviceJson) {
+        final deviceMap = json.decode(deviceJson) as Map<String, dynamic>;
+        return NetworkDevice(
+          ipAddress: deviceMap['ipAddress'] as String,
+          hostname: deviceMap['hostname'] as String?,
+          isOnline: deviceMap['isOnline'] as bool? ?? true,
+          responseTime: deviceMap['responseTime'] as int?,
+        );
+      }).toList();
+
+      setState(() {
+        _customDevices = savedDevices;
+      });
+    } catch (e) {
+      print('Error loading saved devices: $e');
+    }
+  }
+
+  Future<void> _saveCustomDevices() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final devicesJson = _customDevices.map((device) {
+        return json.encode({
+          'ipAddress': device.ipAddress,
+          'hostname': device.hostname,
+          'isOnline': device.isOnline,
+          'responseTime': device.responseTime,
+        });
+      }).toList();
+      
+      await prefs.setStringList('custom_devices', devicesJson);
+    } catch (e) {
+      print('Error saving custom devices: $e');
     }
   }
 
@@ -137,6 +183,60 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
             icon: Icon(Icons.add),
             onPressed: _showAddDeviceDialog,
             tooltip: 'Add Device',
+          ),
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert),
+            onSelected: (value) {
+              switch (value) {
+                case 'save':
+                  _saveCustomDevices();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Custom devices saved successfully'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  break;
+                case 'clear':
+                  _showClearDevicesDialog();
+                  break;
+                case 'export':
+                  _showExportDialog();
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'save',
+                child: Row(
+                  children: [
+                    Icon(Icons.save, size: 16),
+                    SizedBox(width: 8),
+                    Text('Save Devices'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'clear',
+                child: Row(
+                  children: [
+                    Icon(Icons.clear_all, size: 16),
+                    SizedBox(width: 8),
+                    Text('Clear All Custom'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'export',
+                child: Row(
+                  children: [
+                    Icon(Icons.ios_share, size: 16),
+                    SizedBox(width: 8),
+                    Text('Export List'),
+                  ],
+                ),
+              ),
+            ],
           ),
           IconButton(
             icon: Icon(Icons.refresh),
@@ -465,10 +565,13 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     setState(() {
       _customDevices.add(device);
     });
+    
+    // Save devices persistently
+    _saveCustomDevices();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Device added: $ip'),
+        content: Text('Device added and saved: $ip'),
         backgroundColor: Colors.green,
       ),
     );
@@ -556,14 +659,25 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
                 color: ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                '${_customDevices.length} custom',
-                style: TextStyle(
-                  fontFamily: ZensterBMSTheme.fontName,
-                  fontSize: 12,
-                  color: ZensterBMSTheme.nearlyDarkBlue,
-                  fontWeight: FontWeight.w500,
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.save,
+                    size: 12,
+                    color: ZensterBMSTheme.nearlyDarkBlue,
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    '${_customDevices.length} saved',
+                    style: TextStyle(
+                      fontFamily: ZensterBMSTheme.fontName,
+                      fontSize: 12,
+                      color: ZensterBMSTheme.nearlyDarkBlue,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -704,14 +818,25 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
                   color: ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
-                  'Custom',
-                  style: TextStyle(
-                    fontFamily: ZensterBMSTheme.fontName,
-                    fontSize: 10,
-                    color: ZensterBMSTheme.nearlyDarkBlue,
-                    fontWeight: FontWeight.w500,
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.save,
+                      size: 8,
+                      color: ZensterBMSTheme.nearlyDarkBlue,
+                    ),
+                    SizedBox(width: 2),
+                    Text(
+                      'Saved',
+                      style: TextStyle(
+                        fontFamily: ZensterBMSTheme.fontName,
+                        fontSize: 10,
+                        color: ZensterBMSTheme.nearlyDarkBlue,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               ),
           ],
@@ -862,10 +987,14 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
               setState(() {
                 _customDevices.remove(device);
               });
+              
+              // Save updated devices list
+              _saveCustomDevices();
+              
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Device removed: ${device.ipAddress}'),
+                  content: Text('Device removed and saved: ${device.ipAddress}'),
                   backgroundColor: Colors.orange,
                 ),
               );
@@ -875,6 +1004,125 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
               foregroundColor: Colors.white,
             ),
             child: Text('Remove'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showClearDevicesDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Clear All Custom Devices',
+          style: TextStyle(
+            fontFamily: ZensterBMSTheme.fontName,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Text(
+          'Are you sure you want to remove all ${_customDevices.length} custom devices? This action cannot be undone.',
+          style: TextStyle(fontFamily: ZensterBMSTheme.fontName),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: ZensterBMSTheme.grey),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _customDevices.clear();
+              });
+              
+              // Save updated (empty) devices list
+              _saveCustomDevices();
+              
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('All custom devices cleared and saved'),
+                  backgroundColor: Colors.orange,
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Clear All'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showExportDialog() {
+    final deviceList = _customDevices.map((device) {
+      return '${device.ipAddress}${device.hostname != null ? ' (${device.hostname})' : ''}';
+    }).join('\n');
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Export Device List',
+          style: TextStyle(
+            fontFamily: ZensterBMSTheme.fontName,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Custom Devices (${_customDevices.length}):',
+              style: TextStyle(
+                fontFamily: ZensterBMSTheme.fontName,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: 8),
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: ZensterBMSTheme.nearlyWhite,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: ZensterBMSTheme.grey.withOpacity(0.3)),
+              ),
+              child: SelectableText(
+                deviceList.isEmpty ? 'No custom devices to export' : deviceList,
+                style: TextStyle(
+                  fontFamily: ZensterBMSTheme.fontName,
+                  fontSize: 12,
+                  color: ZensterBMSTheme.darkText,
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Long press to select and copy the device list.',
+              style: TextStyle(
+                fontFamily: ZensterBMSTheme.fontName,
+                fontSize: 11,
+                color: ZensterBMSTheme.grey,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Close',
+              style: TextStyle(color: ZensterBMSTheme.nearlyDarkBlue),
+            ),
           ),
         ],
       ),
