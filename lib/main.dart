@@ -4,11 +4,18 @@ import 'package:flutter/services.dart';
 import 'zenster_bms/zenster_bms_home_screen.dart';
 import 'app_theme.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'services/sample_data_service.dart';
 import 'services/battery_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize sqflite for desktop platforms (Linux, Windows, macOS)
+  if (!kIsWeb && (Platform.isLinux || Platform.isWindows || Platform.isMacOS)) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
 
   // Platform detection for web compatibility
   final bool isWeb = identical(0, 0.0);
@@ -19,7 +26,7 @@ void main() async {
   // Start background battery monitoring (writes to DB periodically)
   final batteryService = BatteryService();
   await batteryService.startMonitoring();
-  
+
   // Add sample data for web platform
   if (isWeb) {
     await batteryService.addSampleDataForWeb();

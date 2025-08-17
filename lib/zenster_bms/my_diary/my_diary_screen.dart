@@ -31,14 +31,16 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: widget.animationController!,
-            curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+      CurvedAnimation(
+        parent: widget.animationController!,
+        curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn),
+      ),
+    );
     addAllListData();
-    
-  // Load saved device IP (if any) and initialize battery monitoring
-  ApiService.loadSavedIP();
-  _batteryService.startMonitoring();
+
+    // Load saved device IP (if any) and initialize battery monitoring
+    ApiService.loadSavedIP();
+    _batteryService.startMonitoring();
 
     scrollController.addListener(() {
       if (scrollController.offset >= 24) {
@@ -81,36 +83,42 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     // );
     listViews.add(
       BatteryStatusView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn),
+          ),
+        ),
         animationController: widget.animationController!,
       ),
     );
-    
+
     // Add Battery Consumption Graph
     listViews.add(
       TitleView(
         titleTxt: 'Battery Consumption',
         subTxt: 'Last 24 Hours',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: Interval((1 / count) * 2, 1.0, curve: Curves.fastOutSlowIn),
+          ),
+        ),
         animationController: widget.animationController!,
       ),
     );
     listViews.add(
       ConsumptionGraphView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: Interval((1 / count) * 3, 1.0, curve: Curves.fastOutSlowIn),
+          ),
+        ),
         animationController: widget.animationController!,
       ),
     );
-    
+
     // App Usage Graph
     // listViews.add(
     //   TitleView(
@@ -132,7 +140,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     //     animationController: widget.animationController!,
     //   ),
     // );
-    
+
     // listViews.add(
     //   TitleView(
     //     titleTxt: 'Usage Today',
@@ -155,7 +163,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     //     mainScreenAnimationController: widget.animationController,
     //   ),
     // );
-    
+
     // // Add App Usage Graph
     // listViews.add(
     //   TitleView(
@@ -247,9 +255,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
           children: <Widget>[
             getMainListViewUI(),
             getAppBarUI(),
-            SizedBox(
-              height: MediaQuery.of(context).padding.bottom,
-            )
+            SizedBox(height: MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),
@@ -266,7 +272,8 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
           return ListView.builder(
             controller: scrollController,
             padding: EdgeInsets.only(
-              top: AppBar().preferredSize.height +
+              top:
+                  AppBar().preferredSize.height +
                   MediaQuery.of(context).padding.top +
                   24,
               bottom: 62 + MediaQuery.of(context).padding.bottom,
@@ -293,7 +300,10 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
               opacity: topBarAnimation!,
               child: Transform(
                 transform: Matrix4.translationValues(
-                    0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
+                  0.0,
+                  30 * (1.0 - topBarAnimation!.value),
+                  0.0,
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     color: ZensterBMSTheme.white.withOpacity(topBarOpacity),
@@ -302,23 +312,24 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: ZensterBMSTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
-                          offset: const Offset(1.1, 1.1),
-                          blurRadius: 10.0),
+                        color: ZensterBMSTheme.grey.withOpacity(
+                          0.4 * topBarOpacity,
+                        ),
+                        offset: const Offset(1.1, 1.1),
+                        blurRadius: 10.0,
+                      ),
                     ],
                   ),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top,
-                      ),
+                      SizedBox(height: MediaQuery.of(context).padding.top),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: 16,
-                            right: 16,
-                            top: 16 - 8.0 * topBarOpacity,
-                            bottom: 12 - 8.0 * topBarOpacity),
+                          left: 16,
+                          right: 16,
+                          top: 16 - 8.0 * topBarOpacity,
+                          bottom: 12 - 8.0 * topBarOpacity,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -349,14 +360,14 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
             );
           },
-        )
+        ),
       ],
     );
   }
@@ -395,7 +406,9 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                   // Give user quick feedback
                   if (mounted) {
                     ScaffoldMessenger.of(this.context).showSnackBar(
-                      SnackBar(content: Text('Saved IP: ${ApiService.baseUrl}')),
+                      SnackBar(
+                        content: Text('Saved IP: ${ApiService.baseUrl}'),
+                      ),
                     );
                     setState(() {});
                   }
@@ -408,5 +421,4 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
       },
     );
   }
-
 }

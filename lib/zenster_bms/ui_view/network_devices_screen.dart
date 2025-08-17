@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../zenster_bms_theme.dart';
 import '../../services/network_scanner_service.dart';
+import '../../services/device_ip_service.dart';
 
 class NetworkDevicesScreen extends StatefulWidget {
   const NetworkDevicesScreen({Key? key}) : super(key: key);
@@ -16,6 +17,11 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   String _scanProgress = '';
   final NetworkScannerService _scanner = NetworkScannerService();
   late AnimationController _animationController;
+  
+  // Device IP information
+  DeviceIPInfo? _currentDeviceIP;
+  String _deviceName = 'Loading...';
+  bool _loadingDeviceInfo = true;
 
   @override
   void initState() {
@@ -25,8 +31,28 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
       vsync: this,
     );
     
+    // Load device information
+    _loadDeviceInfo();
+    
     // Start with a quick scan
     _performQuickScan();
+  }
+
+  Future<void> _loadDeviceInfo() async {
+    try {
+      final deviceIP = await DeviceIPService.getCurrentDeviceIP();
+      final deviceName = await DeviceIPService.getDeviceName();
+      
+      setState(() {
+        _currentDeviceIP = deviceIP;
+        _deviceName = deviceName;
+        _loadingDeviceInfo = false;
+      });
+    } catch (e) {
+      setState(() {
+        _loadingDeviceInfo = false;
+      });
+    }
   }
 
   @override
@@ -118,12 +144,216 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
       ),
       body: Column(
         children: [
+          _buildCurrentDeviceInfo(),
           if (_isScanning) _buildScanningIndicator(),
           if (_devices.isNotEmpty) _buildDeviceCount(),
           Expanded(
             child: _devices.isEmpty && !_isScanning
                 ? _buildEmptyState()
                 : _buildDeviceList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCurrentDeviceInfo() {
+    return Container(
+      margin: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            ZensterBMSTheme.nearlyDarkBlue,
+            ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.8),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: ZensterBMSTheme.nearlyDarkBlue.withOpacity(0.3),
+            offset: Offset(0, 4),
+            blurRadius: 12,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: ZensterBMSTheme.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.smartphone,
+                    color: ZensterBMSTheme.white,
+                    size: 24,
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'This Device',
+                        style: TextStyle(
+                          fontFamily: ZensterBMSTheme.fontName,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: ZensterBMSTheme.white,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        _deviceName,
+                        style: TextStyle(
+                          fontFamily: ZensterBMSTheme.fontName,
+                          fontSize: 14,
+                          color: ZensterBMSTheme.white.withOpacity(0.8),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => _showCurrentDeviceDetails(),
+                  icon: Icon(
+                    Icons.info_outline,
+                    color: ZensterBMSTheme.white,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            if (_loadingDeviceInfo)
+              Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(ZensterBMSTheme.white),
+                ),
+              )
+            else if (_currentDeviceIP != null) ...[
+              _buildDeviceIPRow(
+                'IP Address',
+                _currentDeviceIP!.ipAddress ?? 'Unknown',
+                Icons.location_on,
+              ),
+              SizedBox(height: 8),
+              _buildDeviceIPRow(
+                'Interface',
+                _currentDeviceIP!.interfaceName ?? 'Unknown',
+                _currentDeviceIP!.isWifi
+                    ? Icons.wifi
+                    : _currentDeviceIP!.isEthernet
+                        ? Icons.cable
+                        : Icons.device_unknown,
+              ),
+              SizedBox(height: 8),
+              _buildDeviceIPRow(
+                'Connection Type',
+                _currentDeviceIP!.isWifi
+                    ? 'WiFi'
+                    : _currentDeviceIP!.isEthernet
+                        ? 'Ethernet'
+                        : 'Unknown',
+                Icons.network_check,
+              ),
+            ] else
+              Text(
+                'Network information unavailable',
+                style: TextStyle(
+                  fontFamily: ZensterBMSTheme.fontName,
+                  fontSize: 14,
+                  color: ZensterBMSTheme.white.withOpacity(0.7),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDeviceIPRow(String label, String value, IconData icon) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: ZensterBMSTheme.white.withOpacity(0.8),
+          size: 16,
+        ),
+        SizedBox(width: 8),
+        Text(
+          '$label: ',
+          style: TextStyle(
+            fontFamily: ZensterBMSTheme.fontName,
+            fontSize: 14,
+            color: ZensterBMSTheme.white.withOpacity(0.8),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: TextStyle(
+              fontFamily: ZensterBMSTheme.fontName,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: ZensterBMSTheme.white,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showCurrentDeviceDetails() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Current Device Information',
+          style: TextStyle(
+            fontFamily: ZensterBMSTheme.fontName,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildInfoRow('Device Name', _deviceName),
+            if (_currentDeviceIP != null) ...[
+              _buildInfoRow('IP Address', _currentDeviceIP!.ipAddress ?? 'Unknown'),
+              _buildInfoRow('Interface', _currentDeviceIP!.interfaceName ?? 'Unknown'),
+              _buildInfoRow(
+                'Connection Type',
+                _currentDeviceIP!.isWifi
+                    ? 'WiFi'
+                    : _currentDeviceIP!.isEthernet
+                        ? 'Ethernet'
+                        : 'Unknown',
+              ),
+              if (_currentDeviceIP!.ipAddress != null)
+                _buildInfoRow(
+                  'Network Range',
+                  '${DeviceIPService.getNetworkBase(_currentDeviceIP!.ipAddress)}.1-255',
+                ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Close',
+              style: TextStyle(color: ZensterBMSTheme.nearlyDarkBlue),
+            ),
           ),
         ],
       ),

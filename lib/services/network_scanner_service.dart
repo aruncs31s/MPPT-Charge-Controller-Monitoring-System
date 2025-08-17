@@ -23,12 +23,13 @@ class NetworkDevice {
 
 class NetworkScannerService {
   static const int _timeout = 3000; // 3 seconds timeout
-  static const int _concurrentScans = 20; // Number of concurrent ping operations
+  static const int _concurrentScans =
+      20; // Number of concurrent ping operations
 
   /// Scans the network range 192.168.1.1 to 192.168.1.255
   /// Returns a list of online devices
   Future<List<NetworkDevice>> scanNetwork({
-    String baseIp = '192.168.1',
+    String baseIp = '192.168.31',
     int startRange = 1,
     int endRange = 255,
     Function(String)? onProgress,
@@ -44,7 +45,7 @@ class NetworkScannerService {
     for (int i = startRange; i <= endRange; i++) {
       String ip = '$baseIp.$i';
       futures.add(_pingHost(ip));
-      
+
       // Process in batches to avoid overwhelming the system
       if (futures.length >= _concurrentScans || i == endRange) {
         final results = await Future.wait(futures);
@@ -53,10 +54,12 @@ class NetworkScannerService {
             onlineDevices.add(device);
           }
         }
-        
+
         // Progress callback
-        onProgress?.call('Scanned ${i - startRange + 1}/${endRange - startRange + 1} addresses...');
-        
+        onProgress?.call(
+          'Scanned ${i - startRange + 1}/${endRange - startRange + 1} addresses...',
+        );
+
         futures.clear();
       }
     }
@@ -68,15 +71,26 @@ class NetworkScannerService {
   Future<NetworkDevice?> _pingHost(String ipAddress) async {
     try {
       final stopwatch = Stopwatch()..start();
-      
+
       // Try to connect to the host on a common port (80 or 443)
-      final socket = await Socket.connect(ipAddress, 80, timeout: Duration(milliseconds: _timeout))
-        .catchError((_) => Socket.connect(ipAddress, 443, timeout: Duration(milliseconds: _timeout)))
-        .catchError((_) => throw Exception('Connection failed'));
-      
+      final socket =
+          await Socket.connect(
+                ipAddress,
+                80,
+                timeout: Duration(milliseconds: _timeout),
+              )
+              .catchError(
+                (_) => Socket.connect(
+                  ipAddress,
+                  443,
+                  timeout: Duration(milliseconds: _timeout),
+                ),
+              )
+              .catchError((_) => throw Exception('Connection failed'));
+
       stopwatch.stop();
       socket.destroy();
-      
+
       String? hostname;
       try {
         final result = await InternetAddress.lookup(ipAddress);
@@ -86,7 +100,7 @@ class NetworkScannerService {
       } catch (e) {
         // Hostname lookup failed, continue without it
       }
-      
+
       return NetworkDevice(
         ipAddress: ipAddress,
         hostname: hostname,
@@ -95,10 +109,7 @@ class NetworkScannerService {
       );
     } catch (e) {
       // Host is not reachable
-      return NetworkDevice(
-        ipAddress: ipAddress,
-        isOnline: false,
-      );
+      return NetworkDevice(ipAddress: ipAddress, isOnline: false);
     }
   }
 
@@ -106,16 +117,22 @@ class NetworkScannerService {
   Future<NetworkDevice?> _pingHostWithProcess(String ipAddress) async {
     try {
       final stopwatch = Stopwatch()..start();
-      
+
       ProcessResult result;
       if (Platform.isWindows) {
-        result = await Process.run('ping', ['-n', '1', '-w', '3000', ipAddress]);
+        result = await Process.run('ping', [
+          '-n',
+          '1',
+          '-w',
+          '3000',
+          ipAddress,
+        ]);
       } else {
         result = await Process.run('ping', ['-c', '1', '-W', '3', ipAddress]);
       }
-      
+
       stopwatch.stop();
-      
+
       if (result.exitCode == 0) {
         return NetworkDevice(
           ipAddress: ipAddress,
@@ -123,16 +140,10 @@ class NetworkScannerService {
           responseTime: stopwatch.elapsedMilliseconds,
         );
       } else {
-        return NetworkDevice(
-          ipAddress: ipAddress,
-          isOnline: false,
-        );
+        return NetworkDevice(ipAddress: ipAddress, isOnline: false);
       }
     } catch (e) {
-      return NetworkDevice(
-        ipAddress: ipAddress,
-        isOnline: false,
-      );
+      return NetworkDevice(ipAddress: ipAddress, isOnline: false);
     }
   }
 
@@ -164,15 +175,15 @@ class NetworkScannerService {
   /// Quick scan of common device IPs
   Future<List<NetworkDevice>> quickScan() async {
     List<String> commonIps = [
-      '192.168.1.1',   // Router
-      '192.168.1.2',   // Secondary router
-      '192.168.1.10',  // Common static IPs
-      '192.168.1.20',
-      '192.168.1.100', // MPPT controllers often use this range
-      '192.168.1.101',
-      '192.168.1.102',
-      '192.168.1.200', // Common device range
-      '192.168.1.254', // Common router IP
+      '192.168.31.1', // Router
+      '192.168.31.2', // Secondary router
+      '192.168.31.10', // Common static IPs
+      '192.168.31.20',
+      '192.168.31.100', // MPPT controllers often use this range
+      '192.168.31.101',
+      '192.168.31.102',
+      '192.168.31.200', // Common device range
+      '192.168.31.254', // Common router IP
     ];
 
     if (kIsWeb) {
@@ -181,7 +192,7 @@ class NetworkScannerService {
 
     List<NetworkDevice> onlineDevices = [];
     List<Future<NetworkDevice?>> futures = commonIps.map(_pingHost).toList();
-    
+
     final results = await Future.wait(futures);
     for (final device in results) {
       if (device != null && device.isOnline) {

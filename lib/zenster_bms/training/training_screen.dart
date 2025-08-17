@@ -26,9 +26,11 @@ class _TrainingScreenState extends State<TrainingScreen>
   @override
   void initState() {
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: widget.animationController!,
-            curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+      CurvedAnimation(
+        parent: widget.animationController!,
+        curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn),
+      ),
+    );
     addAllListData();
 
     scrollController.addListener(() {
@@ -76,20 +78,28 @@ class _TrainingScreenState extends State<TrainingScreen>
       TitleView(
         titleTxt: 'Network Devices',
         // subTxt: 'View all',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn),
+          ),
+        ),
         animationController: widget.animationController!,
       ),
     );
 
     listViews.add(
       NetworkDevicesCard(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: widget.animationController!,
-            curve:
-                Interval((1 / count) * 1.5, 1.0, curve: Curves.fastOutSlowIn))),
+            curve: Interval(
+              (1 / count) * 1.5,
+              1.0,
+              curve: Curves.fastOutSlowIn,
+            ),
+          ),
+        ),
         animationController: widget.animationController!,
       ),
     );
@@ -152,9 +162,7 @@ class _TrainingScreenState extends State<TrainingScreen>
           children: <Widget>[
             getMainListViewUI(),
             getAppBarUI(),
-            SizedBox(
-              height: MediaQuery.of(context).padding.bottom,
-            )
+            SizedBox(height: MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),
@@ -171,7 +179,8 @@ class _TrainingScreenState extends State<TrainingScreen>
           return ListView.builder(
             controller: scrollController,
             padding: EdgeInsets.only(
-              top: AppBar().preferredSize.height +
+              top:
+                  AppBar().preferredSize.height +
                   MediaQuery.of(context).padding.top +
                   24,
               bottom: 62 + MediaQuery.of(context).padding.bottom,
@@ -198,7 +207,10 @@ class _TrainingScreenState extends State<TrainingScreen>
               opacity: topBarAnimation!,
               child: Transform(
                 transform: Matrix4.translationValues(
-                    0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
+                  0.0,
+                  30 * (1.0 - topBarAnimation!.value),
+                  0.0,
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     color: ZensterBMSTheme.white.withOpacity(topBarOpacity),
@@ -207,23 +219,24 @@ class _TrainingScreenState extends State<TrainingScreen>
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: ZensterBMSTheme.grey
-                              .withOpacity(0.4 * topBarOpacity),
-                          offset: const Offset(1.1, 1.1),
-                          blurRadius: 10.0),
+                        color: ZensterBMSTheme.grey.withOpacity(
+                          0.4 * topBarOpacity,
+                        ),
+                        offset: const Offset(1.1, 1.1),
+                        blurRadius: 10.0,
+                      ),
                     ],
                   ),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top,
-                      ),
+                      SizedBox(height: MediaQuery.of(context).padding.top),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: 16,
-                            right: 16,
-                            top: 16 - 8.0 * topBarOpacity,
-                            bottom: 12 - 8.0 * topBarOpacity),
+                          left: 16,
+                          right: 16,
+                          top: 16 - 8.0 * topBarOpacity,
+                          bottom: 12 - 8.0 * topBarOpacity,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -249,7 +262,8 @@ class _TrainingScreenState extends State<TrainingScreen>
                               child: InkWell(
                                 highlightColor: Colors.transparent,
                                 borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
+                                  Radius.circular(32.0),
+                                ),
                                 onTap: () {},
                                 child: Center(
                                   child: Icon(
@@ -260,10 +274,7 @@ class _TrainingScreenState extends State<TrainingScreen>
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8,
-                                right: 8,
-                              ),
+                              padding: const EdgeInsets.only(left: 8, right: 8),
                               child: Row(
                                 children: <Widget>[
                                   Padding(
@@ -294,7 +305,8 @@ class _TrainingScreenState extends State<TrainingScreen>
                               child: InkWell(
                                 highlightColor: Colors.transparent,
                                 borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
+                                  Radius.circular(32.0),
+                                ),
                                 onTap: () {},
                                 child: Center(
                                   child: Icon(
@@ -342,14 +354,14 @@ class _TrainingScreenState extends State<TrainingScreen>
                         //     ),
                         //   ],
                         // ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
             );
           },
-        )
+        ),
       ],
     );
   }
