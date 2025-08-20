@@ -6,7 +6,10 @@ import '../../services/network_scanner_service.dart';
 import '../../services/device_ip_service.dart';
 
 class NetworkDevicesScreen extends StatefulWidget {
-  const NetworkDevicesScreen({Key? key}) : super(key: key);
+  const NetworkDevicesScreen({Key? key, this.shouldShowAddDialog = false})
+    : super(key: key);
+
+  final bool shouldShowAddDialog;
 
   @override
   _NetworkDevicesScreenState createState() => _NetworkDevicesScreenState();
@@ -36,12 +39,19 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
 
     // Load device information
     _loadDeviceInfo();
-    
+
     // Load saved custom devices
     _loadSavedDevices();
 
     // Start with a quick scan
     _performQuickScan();
+
+    // Show add device dialog if requested
+    if (widget.shouldShowAddDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showAddDeviceDialog();
+      });
+    }
   }
 
   Future<void> _loadDeviceInfo() async {
@@ -65,7 +75,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedDevicesJson = prefs.getStringList('custom_devices') ?? [];
-      
+
       final savedDevices = savedDevicesJson.map((deviceJson) {
         final deviceMap = json.decode(deviceJson) as Map<String, dynamic>;
         return NetworkDevice(
@@ -95,7 +105,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
           'responseTime': device.responseTime,
         });
       }).toList();
-      
+
       await prefs.setStringList('custom_devices', devicesJson);
     } catch (e) {
       print('Error saving custom devices: $e');
@@ -565,7 +575,7 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
     setState(() {
       _customDevices.add(device);
     });
-    
+
     // Save devices persistently
     _saveCustomDevices();
 
@@ -987,14 +997,16 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
               setState(() {
                 _customDevices.remove(device);
               });
-              
+
               // Save updated devices list
               _saveCustomDevices();
-              
+
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Device removed and saved: ${device.ipAddress}'),
+                  content: Text(
+                    'Device removed and saved: ${device.ipAddress}',
+                  ),
                   backgroundColor: Colors.orange,
                 ),
               );
@@ -1038,10 +1050,10 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
               setState(() {
                 _customDevices.clear();
               });
-              
+
               // Save updated (empty) devices list
               _saveCustomDevices();
-              
+
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -1062,9 +1074,11 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
   }
 
   void _showExportDialog() {
-    final deviceList = _customDevices.map((device) {
-      return '${device.ipAddress}${device.hostname != null ? ' (${device.hostname})' : ''}';
-    }).join('\n');
+    final deviceList = _customDevices
+        .map((device) {
+          return '${device.ipAddress}${device.hostname != null ? ' (${device.hostname})' : ''}';
+        })
+        .join('\n');
 
     showDialog(
       context: context,
@@ -1093,7 +1107,9 @@ class _NetworkDevicesScreenState extends State<NetworkDevicesScreen>
               decoration: BoxDecoration(
                 color: ZensterBMSTheme.nearlyWhite,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: ZensterBMSTheme.grey.withOpacity(0.3)),
+                border: Border.all(
+                  color: ZensterBMSTheme.grey.withOpacity(0.3),
+                ),
               ),
               child: SelectableText(
                 deviceList.isEmpty ? 'No custom devices to export' : deviceList,
