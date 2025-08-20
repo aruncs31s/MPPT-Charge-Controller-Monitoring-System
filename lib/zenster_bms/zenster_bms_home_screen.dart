@@ -74,20 +74,7 @@ class _ZensterBMSHomeScreenState extends State<ZensterBMSHomeScreen>
         const Expanded(child: SizedBox()),
         BottomBarView(
           tabIconsList: tabIconsList,
-          addClick: () {
-            // Switch to Devices tab and trigger add device action
-            setState(() {
-              tabBody = NetworkDevicesScreen(shouldShowAddDialog: true);
-            });
-            // Update tab selection to show Devices tab as active
-            tabIconsList.forEach((TabIconData tab) {
-              tab.isSelected = false;
-              if (tab.index == 2) {
-                // Devices tab
-                tab.isSelected = true;
-              }
-            });
-          },
+          addClick: () {},
           changeIndex: (int index) {
             if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
